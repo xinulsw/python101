@@ -110,12 +110,15 @@ Słownik Pythona
         trzeba je lub cały moduł zaimportować za pomocą słowa kluczowego
         ``import``.
 
-    notacja wycinkowa
-        (ang. *slice notation*) pojedyncze elementy wszystkich sekwencji takich jak
+    notacja indeksowa
+        (ang. *index notation*) pojedyncze elementy wszystkich sekwencji takich jak
         napisy, listy, tuple są indeksowane zaczynając od 0, odczytujemy je za pomocą indeksu,
-        np.: ``napis[0]``; możliwe jest również odczytanie kilku elementów sekwencji
-        naraz, w najprostszej postaci trzeba określić indeks pierwszego i ostatniego
-        (niewliczanego) elementu, np. ``napis[1:5]``.
+        np.: ``napis[0]`` – odczytanie pierwszego elementu.
+
+    notacja wycinkowa
+        (ang. *slice notation*) – dostępna w Pythonie używająca indeksów i schematu ``(start, stop, krok)`` notacja,
+        która pozwala odczytywać z sekwencji zakresy elementów, np. ``lista[1:len(lista):2]`` –
+        odczytanie parzystych elementów listy, tzn. co drugiego.
 
     operatory
         **Arytmetyczne**: +, -, \*, /, //, %, \*\* (potęgowanie); znak + znak (konkatenacja napisów); znak * 10 (powielenie znaków);
@@ -201,7 +204,8 @@ Słownik Pythona
         (ang. *list comprehensions*) – efektywny sposób tworzenia list na podstawie
         elementów dowolnych sekwencji, na których wykonywane są te same operacje
         i które opcjonalnie spełniają określone warunki. Składnia:
-        ``[ wyrażenie for wyraz in sekwencja if warunek ]``
+        ``[ wyrażenie for wyraz in sekwencja if warunek ]``,
+        np. ``kwadraty = [x**2 for x in range(1, 11) if x % 2]``.
 
     wyrażenie logiczne
         wyrażenie, którego obliczona wartość to prawda (``True``) lub fałsz (``False``)

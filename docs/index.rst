@@ -36,7 +36,7 @@ Materiały
     :numbered:
 
     podstawy/index
-    pylab/index
+    matplot/index
     rg/index
     pygame/index
     bazy/index

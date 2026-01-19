@@ -8,7 +8,7 @@ która służy do tworzenia różnego rodzaju wykresów. W tym scenariuszu poka�
 w dwuwymiarowym układzie współrzędnych.
 
 Środowisko pracy
-================
+*****************
 
 .. note::
 
@@ -103,7 +103,7 @@ pokazane na poniższym diagramie:
 - **Grid** – siatka wykresu, którą można dodać za pomoca metody ``grid()``.
 
 Funkcja liniowa
-***************
+*****************
 
 **Zadania**: Wykonaj wykres funkcji ``f(x) = a*x + b``.
 
@@ -257,7 +257,7 @@ Wróćmy do konsoli Pythona z wprowadzonym i wykonanym wcześniejszym kodem. Wpi
     >>> x[:len(y1)]
     >>> len(x[:len(y1)])
 
-Podane wyżej przykłady ilustrują działanie **notacji indeksowej** (ang. *slice*),
+Podane wyżej przykłady ilustrują działanie notacji wycinkowej (zob.: :term:`notacja wycinkowa`),
 której obecność rozpoznajemy po znaku dwukropka. Pozwala ona odczytywać z listy tylko
 wskazany przez indeksy zakres elementów. W naszym przypadku wszystkie podane przykłady,
 tzn. ``0:22``, ``:22``, ``:len(y1)`` – wskazują pierwsze 21 elementów listy.
@@ -306,23 +306,33 @@ z wprowadzonym i wykonanym wcześniejszym kodem. Wpisujemy podane niżej polecen
     >>> len(y2)
     >>> x[-len(y2):]
 
-W **notacji indeksowej** możemy używać również indeksów ujemnych wskazujących
+W notacji wycinkowej (zob.: :term:`notacja wycinkowa`) możemy używać również indeksów ujemnych wskazujących
 elementy od końca listy. Jeżeli taki indeks umieścimy jako pierwszy przed
 dwukropkiem, czyli separatorem przedziału, dostaniemy resztę elementów listy.
 
-Metoda ``plot()`` może otrzymać kilka zestawów list argumentów x i wartości y.
+Metoda ``plot()`` może otrzymać kilka zestawów argumentów ``x`` i wartości ``y``.
 Wykorzystamy tę możliwość oraz notację indeksową do narysowania wykresu drugiej funkcji.
 W skrypcie modyfikujemy instrukcję ``plot()``:
+
+.. raw:: html
+
+    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+
+.. code-block:: python
 
     ax.plot(x[:len(y1)], y1, x[-len(y2):], y2)
 
 Ćwiczenie 6
 ============
 
-Spróbuj dziedziny wartości *x* dla funkcji *y1* i *y2* wyznaczyć nie za pomocą
+Spróbuj dziedziny wartości ``x`` dla funkcji ``y1`` i ``y2`` wyznaczyć nie za pomocą
 notacji wycinkowej, ale przy użyciu wyrażeń listowych, których wynik przypisz
-do zmiennych *x1* i *x2*. Użyj ich jako argumentów funkcji ``plot()`` i przetestuj
+do zmiennych ``x1`` i ``x2``. Użyj ich jako argumentów funkcji ``plot()`` i przetestuj
 program.
+
+Wykres dwóch funkcji:
+
+.. figure:: img/dwiefunkcje.png
 
 Ruchy Browna
 ***************
@@ -335,36 +345,39 @@ Na początku przyjmujemy następujące założenia:
 * kierunek ruchu wyznaczać będziemy losując kąt z zakresu <0; 2Pi>;
 * współrzędne kolejnego położenia cząsteczki wyliczać będziemy ze wzorów:
 
-.. math::
+  .. math::
 
-    x_n = x_{n-1} + r * cos(\phi)
+      x_n = x_{n-1} + r * cos(\phi)
 
-    y_n = y_{n-1} + r * sin(\phi)
+      y_n = y_{n-1} + r * sin(\phi)
 
 
-– gdzie: *r* – długość jednego kroku, :math:`\phi` – kąt wskazujący kierunek ruchu w odniesieniu do osi *OX*.
+  – gdzie: ``r`` – długość jednego kroku, :math:`\phi` – kąt wskazujący kierunek ruchu w odniesieniu do osi *0X*.
 
 * końcowy wektor przesunięcia obliczymy ze wzoru: :math:`|s| = \sqrt{(x^2 + y^2)}`
 
-Zacznijmy od wyliczenia współrzędnych opisujących ruch cząsteczki. Do pustego pliku o nazwie :file:`rbrowna.py` wpisujemy:
+Zacznijmy od wyliczenia współrzędnych opisujących ruch cząsteczki.
+Do pustego pliku o nazwie :file:`rbrowna.py` wpisujemy:
 
 .. raw:: html
 
-    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+    <div class="code_no">Plik <i>rbrowna.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: python
 .. literalinclude:: rbrowna01.py
     :linenos:
 
-Funkcje trygonometryczne zawarte w module ``math`` wymagają kąta podanego w radianach,
-dlatego wylosowany kąt po zamianie na liczbę zmiennoprzecinkową mnożymy przez wyrażenie
-``math.pi / 180``. Uruchom i przetestuj kod.
+Funkcje trygonometryczne zawarte w module ``np`` wymagają kąta podanego w radianach,
+dlatego wylosowany kąt mnożymy przez wyrażenie ``np.pi / 180``.
+Obliczone współrzędne kolejnych punktów wypisujemy przy użyciu wyjścia formatowanego.
+Przykładowy zapis ``{x:.2f}`` wypisuje zmienną ``x`` jako liczbę zmiennoprzecinkową z dokładnością
+do 2 miejsc po przecinku.
 
 Ćwiczenie 6
 ============
 
-Do przygotowania wykresu ilustrującego ruch cząsteczki generowane współrzędne musimy
-zapisać w listach. Wstaw w odpowiednich miejscach pliku poniższe instrukcje:
+Wyliczane współrzędne ``x`` i ``y`` należy zapisywać do osobnych list.
+Wstaw wiec w odpowiednich miejscach pliku poniższe instrukcje:
 
 .. raw:: html
 
@@ -378,49 +391,85 @@ zapisać w listach. Wstaw w odpowiednich miejscach pliku poniższe instrukcje:
     lx.append(x)
     ly.append(y)
 
-Na końcu skryptu dopisz instrukcje wyliczającą końcowy wektor przesunięcia
-(:math:`|s| = \sqrt{(x^2 + y^2)}`) i drukującą go na ekranie. Przetestuj program.
+Na końcu skryptu umieść instrukcje wyliczającą końcowy wektor przesunięcia oraz wypisującą
+obliczoną wartość:
 
-Pozostaje dopisanie importu biblioteki *matplotlib* oraz instrukcji generujących wykres.
-Poniższy kod ilustruje również użycie opcji wzbogacających wykres o legendę, etykiety czy tytuł.
+.. raw:: html
+
+    <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+
+.. code-block:: python
+
+    s = np.fabs(np.sqrt(x**2 + y**2))
+    print('Wektor przesunięcia: {s:.2f}')
+
+Przetestuj program. Przykładowy wynik działania to komunikaty wypisane w terminalu:
+
+.. code-block:: bash
+
+    x = -4.86, y = -3.51
+    x = -3.86, y = -3.59
+    x = -3.84, y = -4.59
+    x = -4.13, y = -5.55
+    Wektor przesunięcia: 6.92
+
+
+.. raw:: html
+
+    <hr>
+
+Pozostaje dopisanie instrukcji generujących wykres.
+Poniższy kod pokazuje również użycie metod wzbogacających wykres o legendę,
+etykiety osi i tytuł.
 
 .. raw:: html
 
     <div class="code_no">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
 
 .. highlight:: python
-.. literalinclude:: rbrowna03.py
+.. literalinclude:: rbrowna02.py
     :linenos:
-    :emphasize-lines: 6, 28-34
+    :emphasize-lines: 23-30
     :lineno-start: 1
     :lines: 1-
 
-Warto zwrócić uwagę na dodatkowe opcje formatujące wykres w poleceniu
-``p.plot(lx, ly, "o:", color="green", linewidth=2, alpha=0.5)``.
-Trzeci parametr określa styl linii, możesz sprawdzić inne wartości, np:
-``r:.``, ``r:+``, ``r.``, ``r+``. Można też określać kolor (``color``),
-grubość linii (``linewidth``) i przezroczystość (``alpha``). Poeksperymentuj.
+Przeanalizujmy dodatkowe parametry formatujące wykres w poleceniu
+``ax.plot(lx, ly, 'o:g', linewidth=2, alpha=0.5)``:
+
+- ``'o:'`` – ciąg formatujący składający się z 3 opcjonalnych znaków wg schematu ``'[marker][linia][kolor]'``,
+  np. marker ``o`` określa znak użyty do rysowania punktów (kółko),
+  następny znak ``:`` określa styl rysowania linii (kropki), trzeci znak ``g``
+  ustawia kolor (zielony) (zob. sekcję w dokumentacji:
+  `Format Strings <https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html>`_),
+- ``color='green'`` – kolor wykresu można podać w osobnym parametrze,
+- ``linewidth=2`` – parametr pozwala ustawić grubość linii,
+- ``alpha=0.5`` – określa przezroczystość.
+
+Poeksperymentuj z innymi ciągami formatującymi, np: ``r:.``, ``r:+``, ``r.``, ``r+``.
 
 Ćwiczenie 7
 ============
 
-Spróbuj uzupełnić kod tak, aby na wykresie zaznaczyć prostą linią w kolorze niebieskim wektor przesunięcia.
-Efekt końcowy może wyglądać następująco:
+Spróbuj dodać do wykresu prostą linią w kolorze niebieskim oznaczającą wektor przesunięcia.
+
+.. tip::
+
+    Użyj drugiego wywołania metody ``plot()`` z argumentami zawierającymi współrzędne
+    punktu początkowego i końcowego ruchu cząsteczki.
+
+Przykładowy wykres:
 
 .. figure:: img/rbrowna.png
 
 Zadania dodatkowe
 *****************
 
-Przygotuj wykres funkcji kwadratowej:
-*f(x) = a*x^2 + b*x + c*, gdzie *x* = <-10;10> z krokiem 1, przyjmij następujące
-wartości współczynników: *a = 1, b = -3, c = 1*.
+1) Przygotuj wykres funkcji kwadratowej:
+   *f(x) = a*x^2 + b*x + c*, gdzie *x* = <-10;10> z krokiem 1,
+   przyjmij następujące wartości współczynników: *a = 1, b = -3, c = 1*.
 
 Uzyskany wykres powinien wyglądać następująco:
 
-.. figure:: img/pylab01.png
+.. figure:: img/fkwadratowa.png
 
-Źródła
-*******************
-
-* :download:`pylab.zip <pylab.zip>`
+2) ...

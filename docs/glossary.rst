@@ -248,12 +248,6 @@ Słownik
         (ang. *widget*) – podstawowy element graficzny interfejsu, zwany czasami kontrolką,
         nie tylko główne okno aplikacji, ale również etykiety, pola edycyjne, przycicki itd.
 
-    wyrażenie listowe
-        (ang. *list comprehension* ) to zwięzły sposób tworzenie list za pomocą iterowania po jakiejś sekwencji
-        przy użyciu pętli ``for`` i opcjonalnie instrukcji warunkowej ``if``. Odczytywane z sekwencji elementy
-        są najczęściej częścią jakiegoś wyrażenia, którego wynik dodawany jest do wynikowej listy,
-        np. ``kwadraty = [x**2 for x in range(1, 11) if x % 2]``.
-
     zdarzenie (ang. *event*)
         zapis zajścia w systemie komputerowym określonej sytuacji, np. poruszenie myszką, kliknięcie, naciśnięcie klawisza.
 
