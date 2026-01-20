@@ -4,7 +4,7 @@ con = sqlite3.connect(":memory:")
 con.isolation_level = None
 cur = con.cursor()
 
-bufor = ""
+buffer = ""
 
 print("Podaj polecenie SQL do wykonania w sqlite3.")
 print("Naciśnij Enter, aby wyjść.")
@@ -13,16 +13,16 @@ while True:
     line = input()
     if line == "":
         break
-    bufor += line
-    if sqlite3.complete_statement(bufor):
+    buffer += line
+    if sqlite3.complete_statement(buffer):
         try:
-            bufor = bufor.strip()
-            cur.execute(bufor)
+            buffer = buffer.strip()
+            cur.execute(buffer)
 
-            if bufor.lstrip().upper().startswith("SELECT"):
-                print(cur.fetchall())
+            if buffer.lstrip().upper().startswith("SELECT"):
+                print cur.fetchall()
         except sqlite3.Error as e:
-            print("Wystąpił błąd:", e.args[0])
-        bufor = ""
+            print "Wystąpił błąd:", e.args[0]
+        buffer = ""
 
 con.close()
