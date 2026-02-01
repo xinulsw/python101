@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import QApplication, QWidget
 from gui_z3 import UiWidget
 from PyQt6.QtGui import QColor
+from PyQt6.QtWidgets import QRadioButton
 
 
 class Widgety(QWidget, UiWidget):
@@ -27,7 +28,6 @@ class Widgety(QWidget, UiWidget):
         self.ksztalt_aktywny.ustaw_ksztalt(self.grupa_chk.checkedId())
 
     def aktywuj_ksztalt(self, wartosc):
-        print(wartosc)
         nadawca = self.sender()
         if wartosc:
             self.ksztalt_aktywny = self.ksztalt1
@@ -41,14 +41,19 @@ class Widgety(QWidget, UiWidget):
     def ustaw_kanal(self, wartosc):
         self.kanaly = set()  # resetujemy zbiór kanałów
         nadawca = self.sender()
-        if wartosc:
-            self.kanaly.add(nadawca.text())
-            if nadawca.text() == 'R':
-                self.suwak.setValue(self.kolor_w.red())
-            elif nadawca.text() == 'G':
-                self.suwak.setValue(self.kolor_w.green())
-            else:
-                self.suwak.setValue(self.kolor_w.blue())
+        if isinstance(nadawca, QRadioButton) and wartosc:
+            # nadawca to QRadioButton
+            kanal = nadawca.text()
+            self.kanaly.add(kanal)
+            self.wypisz_kanal(kanal, self.suwak)
+
+    def wypisz_kanal(self, kanal, widzet):
+        if kanal == 'R':
+            widzet.setValue(self.kolor_w.red())
+        elif kanal == 'G':
+            widzet.setValue(self.kolor_w.green())
+        else:
+            widzet.setValue(self.kolor_w.blue())
 
     def zmien_kolor(self, wartosc):
         self.lcd.display(wartosc)

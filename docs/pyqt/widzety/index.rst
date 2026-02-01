@@ -351,7 +351,7 @@ zmieniać rozmiar otaczających go widżetów.
 Przyciski typu `RadioButton <https://doc.qt.io/qt-6/qradiobutton.html>`_ posłużą nam do wskazywania
 kanału koloru RGB, którego wartość chcemy zmienić. Tworzymy je w pętli,
 wykorzystując odczytane z tupli nazwy kanałów: ``self.radio = QRadioButton(v)``.
-Przyciski rozmieszczamy w poziomie (``self.uklad_r.addWidget(self.radio)``).
+Przyciski rozmieszczamy w układzie poziomym (``self.uklad_r.addWidget(self.radio)``).
 
 Pierwszy z nich zaznaczamy: ``self.uklad_r.itemAt(0).widget().setChecked(True)``.
 Metoda ``itemAt(0)`` zwraca nam pierwszy element danego układu jako typ ``QLayoutItem``.
@@ -385,8 +385,9 @@ W pliku :file:`widzety.py` dodajemy importy:
 .. code-block:: python
 
     from PyQt6.QtGui import QColor
+    from PyQt6.QtWidgets import QRadioButton
 
-Dalej uzupełniamy konstruktor (``__init__()``) klasy *Widgety*:
+Uzupełniamy konstruktor (``__init__()``) klasy ``Widgety``:
 
 .. raw:: html
 
@@ -400,13 +401,13 @@ Dalej uzupełniamy konstruktor (``__init__()``) klasy *Widgety*:
 
 Zmiana stanu przycisku *RadioButton* emituje sygnał ``toggled``. W pętli
 ``for i in range(self.uklad_r.count()):`` wiążemy ten sygnał dla każdego
-przycisku układu z metodą ``ustaw_kanal()``:
+przycisku układu ze slotem ``ustaw_kanal()``:
 ``self.uklad_r.itemAt(i).widget().toggled.connect(self.ustaw_kanal)``.
 
-Przesuwanie suwaka wyzwala sygnał ``valueChanged``, który łączymy z metodą
+Przesuwanie suwaka wyzwala sygnał ``valueChanged``, który łączymy ze slotem
 ``zmien_kolor()``: ``self.suwak.valueChanged.connect(self.zmienKolor)``.
 
-Do klasy ``Widget`` dodajemy teraz wspomniane przed chwilą metody:
+Do klasy ``Widget`` dodajemy teraz wspomniane sloty i metodę pomocniczą:
 
 .. raw:: html
 
@@ -416,20 +417,29 @@ Do klasy ``Widget`` dodajemy teraz wspomniane przed chwilą metody:
 .. literalinclude:: widzety_z3.py
     :linenos:
     :lineno-start: 41
-    :lines: 41-65
+    :lines: 41-70
 
-Metoda ``ustaw_kanal()`` otrzymuje jako argument wartość logiczną.
-Jeżeli będzie to ``True``, co oznacza zaznaczony przycisk *RadioButton*,
-resetujemy zbiór kanałów i dodajemy do niego literę wybranego kanału:
-``self.kanaly.add(nadawca.text())``. Następnie w złożonej instrukcji warunkowej
-sprawdzamy, który kanał został aktywowany, i ustawiamy na suwaku poprzednią
-wartość kanału, np.: ``self.suwak.setValue(self.kolor_w.red())``.
+Metoda ``ustaw_kanal()`` służy do zapisania w zbiorze kanałów ``self.kanaly`` litery
+oznaczającej wybrany kanał. Kanał można wybrać za pomocą różnych widżetów, dlatego na początku
+w zmiennej ``nadawca`` zapisujemy obiekt nadawcy. Warunek ``isinstance(nadawca, QRadioButton) and wartosc``
+sprawdza za poocą funkcji wbudowanej ``isinstance(nadawca, QRadioButton)``, czy nadawcą jest przycisk *RadioButton*
+i jeżeli tak, czy parametr ``wartosc`` ma wartość ``True``, co oznacza, że przycisk jest zaznaczony.
+Jeżeli zostanie spełniony, do zresetowanego wcześniej zbioru kanałów dodajemy literę wybranego kanału:
+``self.kanaly.add(nadawca.text())``. Następnie wywołujemy metodę ``wypisz_kanal()``.
 
-Do metody ``zmien_kolor()`` przekazywana jest wartość wybrana na suwaku,
-czyli liczba z zakresu ``<0; 255>``. Wyświetlamy ją w widżecie LCD: ``self.lcd.display(wartosc)``.
-Następnie sprawdzamy, który ze zmienianych kanałów znajduje sie w zbiorze kanały i aktualizujemy
-jego wartość, np.: ``self.kolor_w.setRed(wartosc)``. Na koniec przypisujemy kolor wypełnienia zapisany
-we właściwości ``kolor_w`` aktywnemu kształtowi, osobno podając składowe RGB.
+Zadaniem metody ``wypisz_kanal()`` jest ustawienie wartości kanału przekazanego w parametrze ``kanal``
+w widżecie przekazanym w parametrze ``widzet`` za pomocą metody ``setValue()``. Przekazny kanał wykkrywamy
+w złożonej instrukcji warunkowej, składową koloru odczytujemy za pomocą odpowiednich metod, np.:
+``self.suwak.setValue(self.kolor_w.red())``.
+
+Metoda ``zmien_kolor()`` wywoływana jest po zmianie wartości, tj. liczby z zakresu ``<0; 255>``,
+za pomocą suwaka. Wartość wyświetlamy w widżecie LCD: ``self.lcd.display(wartosc)``.
+Następnie sprawdzamy, który ze zmienianych kanałów znajduje się w zbiorze kanały i aktualizujemy
+jego wartość w kolorze wypełnienia, np.: ``self.kolor_w.setRed(wartosc)``.
+
+Na koniec składowe koloru wypełnienia ``kolor_w`` przekazujemy do metody
+``ustaw_kolor_w()`` aktywnego kształtu. Przypomnijmy, żę metoda ta zdefiniowana w pliku :file:`ksztalty.py`
+aktualizuje kolor kształtu i wymusza jego ponowne rysowanie.
 
 Przetestuj działanie aplikacji.
 
@@ -438,17 +448,17 @@ Przetestuj działanie aplikacji.
 ComboBox i SpinBox
 ******************
 
-Modyfikowane kanały koloru można wybierać z rozwijalnej listy typu
+Modyfikowane kanały koloru można również wybierać z rozwijalnej listy typu
 `QComboBox <https://doc.qt.io/qt-6/qcombobox.html>`_, a ich wartości
 ustawiać za pomocą widżetu `QSpinBox <https://doc.qt.io/qt-6/qspinbox.html>`_.
 
-**Importy** w pliku :file:`gui.py`:
+W pliku :file:`gui.py` dodajemy importy:
 
 .. code-block:: python
 
     from PyQt6.QtWidgets import QComboBox, QSpinBox
 
-Po komentarzu ``# koniec RadioButton ###`` uzupełniamy kod funkcji ``setupUi()``:
+Po komentarzu ``# koniec RadioButton`` uzupełniamy konstruktor klasy ``UiWidget``:
 
 .. raw:: html
 
@@ -457,22 +467,29 @@ Po komentarzu ``# koniec RadioButton ###`` uzupełniamy kod funkcji ``setupUi()`
 .. highlight:: python
 .. literalinclude:: gui_z4.py
     :linenos:
-    :lineno-start: 72
-    :lines: 72-89
-    :emphasize-lines: 4, 8-9
+    :lineno-start: 73
+    :lines: 73-91
 
-Po utworzeniu obiektu listy za pomocą pętli ``for`` dodajemy kolejne elementy,
-czyli litery poszczególnych kanałów: ``self.listaRGB.addItem(v)``.
+Do listy utworzonej na podstawie klasy ``ComboBox`` dodajemy za pomocą pętli ``for``
+litery poszczególnych kanałów: ``self.lista_rgb.addItem(v)``.
 
-Obiekt *SpinBox* podobnie jak *Slider* wymaga ustawienia zakresu wartości <0-255>,
-wykorzystujemy takie same metody, jak wcześniej, tj. ``setMinimum()`` i ``setMaximum()``.
+Obiekt typu *SpinBox* podobnie jak *Slider* wymaga ustawienia zakresu wartości ``<0-255>``.
+Stosujemy takie same metody, jak wcześniej, tj. ``setMinimum()`` i ``setMaximum()``.
 
-Obydwa widżety na razie wyłączamy metodą ``setEnabled(False)``. Umieszczamy jeden nad drugim,
-a ich układ dodajemy obok przycisków Radio, rozdzielając je odstępem 25 px:
-``ukladH3.insertSpacing(1, 25)``.
+Obydwa widżety na początku wyłączamy metodą ``setEnabled(False)``. Umieszczamy jeden nad drugim
+w pionowym układzie ``uklad_v1``, a układ dodajemy obok przycisków Radio ``uklad_h3.addLayout(uklad_v1)``,
+oddzielając go odstępem 25 px: ``uklad_h3.insertSpacing(1, 25)``.
 
-W pliku :file:`widzety.py` dodajemy do konstruktora kod przechwytujący 3 sygnały
-i dopisujemy dwie nowe funkcje:
+Obsługa sygnałóW
+=================
+
+W pliku :file:`widzety.py` dodajemy import:
+
+.. code-block:: python
+
+    from PyQt6.QtWidgets import QRadioButton
+
+Do konstruktora dodajemy kod przechwytujący 3 sygnały:
 
 .. raw:: html
 
@@ -481,22 +498,56 @@ i dopisujemy dwie nowe funkcje:
 .. highlight:: python
 .. literalinclude:: widzety_z4.py
     :linenos:
-    :lineno-start: 28
-    :lines: 28-45
+    :lineno-start: 27
+    :lines: 27-31
 
-Po uruchomieniu aplikacji aktywna jest tylko grupa przycisków Radio.
-Kliknięcie tej grupy przechwytujemy: ``self.grupa_rb.clicked.connect(self.ustawStan)``.
-Funkcja ``ustawStan()`` w zależności od zaznaczenia grupy lub jego braku
-wyłącza (``setEnabled(False)``) lub włącza (``setEnabled(True)``) widżety
-*ComboBox* i *SpinBox*. W tym drugim przypadku resetujemy zbiór kanałów
-i dodajemy do niego tylko kanał wybrany na liście: ``self.kanaly.add(self.listaRGB.currentText())``.
+Następnie do klasy ``Widgety`` dodajemy slot ``ustaw_stan()``, który obsłuży kliknięcie
+przycisku *CheckBox* z tekstem *Opcje RGB* umożliwiającego wybór spsosobu ustawiania składowych
+koloru wypełnienia:
 
-Drugie wydarzenie, które obsłużymy, to wybranie nowego kanału z listy. Emitowany jest wtedy
-sygnał ``activated[str]``, który zawiera tekst wybranego elementu. W slocie ``ustawKanalCBox()``
-tekst ten, czyli nazwę składowej koloru, dodajemy do zbioru kanałów.
+.. raw:: html
 
-Zmiana wartości w kontrolce SpinBox, czyli sygnał ``valueChanged[int]``, przekierowujemy
-do funkcji ``zmienKolor()``, która obsługuje również zmiany wartości na suwaku.
+    <div class="code_no">Plik <i>widzety.py</i>. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+
+.. highlight:: python
+.. literalinclude:: widzety_z4.py
+    :linenos:
+    :lineno-start: 80
+    :lines: 80-93
+
+Kliknięcie wspomnianego przycisku przechwytujemy: ``self.grupa_rb.clicked.connect(self.ustaw_stan)``.
+Jeżeli funkcja ``ustaw_stan()`` w parametrze ``wartosc`` otrzyma ``True``, tzn. przycisk 
+jest zaznaczony, wyłączamy widżety *ComboBox* i *SpinBox* (``setEnabled(False)``).
+W przeciwnym razie je włączamy (``setEnabled(True)``), a także resetujemy zbiór kanałów
+i dodajemy do niego kanał wybrany na liście: ``self.kanaly.add(self.lista_rgb.currentText())``.
+Na koniec ustawiamy wartość aktywnego kanału w obiekcie *SpinBox*.
+
+Zmianę kanału na liście *ComboBox*, tj. sygnał ``currentTextChanged`` obsługujemy za pomocą dodanej
+wcześniej metody ``ustaw_kanal()``, która przyjmuje następującą postać:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>widzety.py</i>. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+
+.. highlight:: python
+.. literalinclude:: widzety_z4.py
+    :linenos:
+    :lineno-start: 46
+    :lines: 46-58
+
+Dodajemy warunek ``isinstance(nadawca, QComboBox)`` sprawdzający, czy nadawcą jest obiekt typu ``QComboBox``.
+Jeżeli tak, resetujemy zbiór kanałów i dodajemy literę wybranego kanału: ``self.kanaly.add(wartosc)``.
+Na koniec ustawiamy wartość tego kanału w obiekcie *SpinBox*: ``self.wypisz_kanal(wartosc, self.spin_rgb)``.
+
+.. note::
+
+    Slot ``ustaw_kanal()`` w przypadku sygnału ``toogled`` obiektu typu ``QRadioButton`` otrzymuje
+    w parametrze ``wartosc`` wartość ``True`` lub ``False`` w zależności od tego, czy przycisk jest zaznaczony
+    czy nie. W przypadku sygnału ``currentTextChanged`` obiektu typu ``QComboBox``
+    parametr ``wartosc`` zawiera literę wybranego kanału.
+
+Zmiana wartości w kontrolce *SpinBox*, czyli sygnał ``valueChanged``, przekierowujemy
+do dodanego wcześniej slotu ``zmien_lolor()``, który obsługuje również zmiany wartości na suwaku.
 
 Uruchom aplikację i sprawdź jej działanie.
 

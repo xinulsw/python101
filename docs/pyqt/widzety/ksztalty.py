@@ -59,6 +59,5 @@ class Ksztalt(QWidget):
         self.update()
 
     def ustaw_kolor_w(self, r=0, g=0, b=0):
-        print(r, g, b)
         self.kolor_w = QColor(r, g, b)
         self.update()
