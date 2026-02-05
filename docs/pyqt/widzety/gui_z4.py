@@ -87,7 +87,7 @@ class UiWidget:
         # do układu poziomego grupy Radio dodajemy układ ComboBox i SpinBox
         uklad_h3.insertSpacing(1, 25)
         uklad_h3.addLayout(uklad_v1)
-        # koniec ComboBox i SpinBox ###
+        # koniec ComboBox i SpinBox
 
         # główny układ okna, pionowy
         uklad_okna = QVBoxLayout()

@@ -480,7 +480,7 @@ Obydwa widżety na początku wyłączamy metodą ``setEnabled(False)``. Umieszcz
 w pionowym układzie ``uklad_v1``, a układ dodajemy obok przycisków Radio ``uklad_h3.addLayout(uklad_v1)``,
 oddzielając go odstępem 25 px: ``uklad_h3.insertSpacing(1, 25)``.
 
-Obsługa sygnałóW
+Obsługa sygnałów
 =================
 
 W pliku :file:`widzety.py` dodajemy import:
@@ -556,17 +556,17 @@ Uruchom aplikację i sprawdź jej działanie.
 Przyciski PushButton
 ********************
 
-Do tej pory można było zmieniać kolor każdego kanału składowego osobno.
-Dodamy teraz grupę przycisków typu `QPushButton <https://doc.qt.io/qt-6/qpushbutton.html>`_,
-które zachowywać się będą jak grupa przycisków wielokrotnego wyboru.
+Za pomocą dodanych do tej pory widżetów możemy zmieniać kolor każdego kanału składowego osobno.
+Dodamy teraz możliwość zmiany koloru kilku kanałów jednocześnie. Użyjemy grupy przycisków typu
+`QPushButton <https://doc.qt.io/qt-6/qpushbutton.html>`_.
 
-**Importy** w pliku :file:`gui.py`:
+W pliku :file:`gui.py` dodajemy importy:
 
 .. code-block:: python
 
     from PyQt6.QtWidgets import QPushButton
 
-Następnie po komentarzu ``# koniec ComboBox i SpinBox ###`` dopisujemy kod w funkcji ``setupUi()``:
+Następnie po komentarzu ``# koniec ComboBox i SpinBox`` dopisujemy kod w funkcji ``setupUi()``:
 
 .. raw:: html
 
@@ -576,19 +576,33 @@ Następnie po komentarzu ``# koniec ComboBox i SpinBox ###`` dopisujemy kod w fu
 .. literalinclude:: gui_z5.py
     :linenos:
     :lineno-start: 92
-    :lines: 92-107
+    :lines: 92-108
     :emphasize-lines: 4, 6-8
 
 Przyciski, jak poprzednio, tworzymy w pętli, podając w konstruktorze litery
 składowych koloru RGB: ``self.btn = QPushButton(v)``. Każdy przycisk przekształcamy
 na stanowy (może być trwale wciśnięty) za pomocą metody ``setCheckable()``.
 Kolejne obiekty dodajemy do grupy logicznej typu `QButtonGroup <https://doc.qt.io/qt-6/qbuttongroup.html>`_:
-``self.grupaP.addButton(self.btn)``; oraz do układu poziomego.
-Układ przycisków dodajemy do ramki typu `QGropBox <https://doc.qt.io/qt-6/qgroupbox.html>`_ z przyciskiem CheckBox:
-``self.grupaPBtn.setCheckable(True)``. Na początku ramkę wyłączamy: ``self.grupaPBtn.setChecked(False)``.
+``self.grupa_pb.addButton(self.btn)``; oraz do układu poziomego ``uklad_pb``.
 
-**Uwaga**: na koniec musimy dodać grupę przycisków do głównego układu okna:
-``ukladOkna.addWidget(self.grupaPBtn)``. Inaczej nie zobaczymy jej w oknie aplikacji!
+Układ dodajemy do ramki typu `QGroupBox <https://doc.qt.io/qt-6/qgroupbox.html>`_ z przyciskiem *CheckBox*:
+``self.grupa_pbb.setCheckable(True)``. Na początku ramkę wyłączamy: ``self.grupaPBtn.setChecked(False)``.
+Ramkę z przyciskami musimy dodać do głównego układu okna za pomocą metody ``addWidget()``.
+Kod powinien wyglądać następująco:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>gui.py</i>. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+
+.. highlight:: python
+.. literalinclude:: gui_z5.py
+    :linenos:
+    :lineno-start: 109
+    :lines: 109-115
+    :emphasize-lines: 6
+
+Obsługa sygnałów
+================
 
 W pliku :file:`widzety.py` jak zwykle dopisujemy obsługę sygnałów w konstruktorze
 i jedną nową funkcję:
@@ -603,9 +617,9 @@ i jedną nową funkcję:
     :lineno-start: 32
     :lines: 32-42
 
-Pętla ``for btn in self.grupaP.buttons():`` odczytuje kolejne przyciski
-z grupy ``grupaP``, i kliknięcie każdego wiąże z nową funkcją:
-``btn.clicked[bool].connect(self.ustawKanalPBtn)``. Zadaniem funkcji
+Pętla ``for btn in self.grupa_pb.buttons():`` odczytuje kolejne przyciski
+z grupy ``grupa_pb`` i kliknięcie każdego wiąże ze nowym slotem:
+``btn.clicked.connect(self.ustaw_kanal_pb)``. Zadaniem funkcji
 jest dodawanie kanału do zbioru, jeżeli przycisk został wciśnięty,
 i usuwanie ich ze zbioru w przeciwnym razie. Inaczej niż w poprzednich
 funkcjach, obsługujących przyciski *Radio* i listę *ComboBox*, nie resetujemy

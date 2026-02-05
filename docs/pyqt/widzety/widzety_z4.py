@@ -24,7 +24,7 @@ class Widgety(QWidget, UiWidget):
             self.uklad_r.itemAt(i).widget().toggled.connect(self.ustaw_kanal)
         self.suwak.valueChanged.connect(self.zmien_kolor)
 
-        # Lista ComboBox i SpinBox ###
+        # Lista ComboBox i SpinBox
         self.grupa_rb.clicked.connect(self.ustaw_stan)
         self.lista_rgb.currentTextChanged.connect(self.ustaw_kanal)
         self.spin_rgb.valueChanged.connect(self.zmien_kolor)
