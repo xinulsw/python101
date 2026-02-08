@@ -350,7 +350,7 @@ zmieniać rozmiar otaczających go widżetów.
 
 Przyciski typu `RadioButton <https://doc.qt.io/qt-6/qradiobutton.html>`_ posłużą nam do wskazywania
 kanału koloru RGB, którego wartość chcemy zmienić. Tworzymy je w pętli,
-wykorzystując odczytane z tupli nazwy kanałów: ``self.radio = QRadioButton(v)``.
+wykorzystując odczytane z ciągu znaków ``'RGB'`` nazwy kanałów: ``self.radio = QRadioButton(v)``.
 Przyciski rozmieszczamy w układzie poziomym (``self.uklad_r.addWidget(self.radio)``).
 
 Pierwszy z nich zaznaczamy: ``self.uklad_r.itemAt(0).widget().setChecked(True)``.
@@ -359,9 +359,9 @@ Kolejna metoda ``widget()`` przekształca go w obiekt typu ``QWidget``,
 dzięki czemu możemy wywoływać jego metody.
 
 Układ przycisków dodajemy do grupy typu `QGroupBox <https://doc.qt.io/qt-6/qgroupbox.html>`_:
-``self.grupa_rb.setLayout(self.uklad_r)``. Tego typu grupa zapewnia graficzną
+``self.grupa_rbb.setLayout(self.uklad_r)``. Tego typu grupa zapewnia graficzną
 ramkę z przyciskiem aktywującym typu CheckBox, który domyślnie zaznaczamy:
-``self.grupa_rb.setCheckable(True)``. Za pomocą metody ``setObjectName()``
+``self.grupa_rbb.setCheckable(True)``. Za pomocą metody ``setObjectName()``
 grupie nadajemy nazwę *Radio*. Grupę dodajemy do układu poziomego.
 
 Wszystkie dodane powyżej widżety zostały umieszczone w układach poziomych,
@@ -501,9 +501,8 @@ Do konstruktora dodajemy kod przechwytujący 3 sygnały:
     :lineno-start: 27
     :lines: 27-31
 
-Następnie do klasy ``Widgety`` dodajemy slot ``ustaw_stan()``, który obsłuży kliknięcie
-przycisku *CheckBox* z tekstem *Opcje RGB* umożliwiającego wybór spsosobu ustawiania składowych
-koloru wypełnienia:
+Pierwszy sygnał, tj. kliknięcie przycisku *CheckBox* grupy przycisków *RadioButton*
+wiążemy ze slotem ``ustaw_stan()``: self.grupa_rbb.clicked.connect(self.ustaw_stan):
 
 .. raw:: html
 
@@ -513,10 +512,9 @@ koloru wypełnienia:
 .. literalinclude:: widzety_z4.py
     :linenos:
     :lineno-start: 80
-    :lines: 80-93
+    :lines: 80-92
 
-Kliknięcie wspomnianego przycisku przechwytujemy: ``self.grupa_rb.clicked.connect(self.ustaw_stan)``.
-Jeżeli funkcja ``ustaw_stan()`` w parametrze ``wartosc`` otrzyma ``True``, tzn. przycisk 
+Jeżeli metoda ``ustaw_stan()`` w parametrze ``wartosc`` otrzyma ``True``, tzn. przycisk 
 jest zaznaczony, wyłączamy widżety *ComboBox* i *SpinBox* (``setEnabled(False)``).
 W przeciwnym razie je włączamy (``setEnabled(True)``), a także resetujemy zbiór kanałów
 i dodajemy do niego kanał wybrany na liście: ``self.kanaly.add(self.lista_rgb.currentText())``.
@@ -566,7 +564,7 @@ W pliku :file:`gui.py` dodajemy importy:
 
     from PyQt6.QtWidgets import QPushButton
 
-Następnie po komentarzu ``# koniec ComboBox i SpinBox`` dopisujemy kod w funkcji ``setupUi()``:
+Następnie po komentarzu ``# koniec ComboBox i SpinBox`` dopisujemy kod w konstruktorze klasy ``UiWidget``:
 
 .. raw:: html
 
@@ -575,18 +573,24 @@ Następnie po komentarzu ``# koniec ComboBox i SpinBox`` dopisujemy kod w funkcj
 .. highlight:: python
 .. literalinclude:: gui_z5.py
     :linenos:
-    :lineno-start: 92
-    :lines: 92-108
+    :lineno-start: 93
+    :lines: 93-109
     :emphasize-lines: 4, 6-8
 
-Przyciski, jak poprzednio, tworzymy w pętli, podając w konstruktorze litery
-składowych koloru RGB: ``self.btn = QPushButton(v)``. Każdy przycisk przekształcamy
-na stanowy (może być trwale wciśnięty) za pomocą metody ``setCheckable()``.
-Kolejne obiekty dodajemy do grupy logicznej typu `QButtonGroup <https://doc.qt.io/qt-6/qbuttongroup.html>`_:
-``self.grupa_pb.addButton(self.btn)``; oraz do układu poziomego ``uklad_pb``.
+Przyciski dodamy do układu poziomego ``uklad_pb`` oraz do grupy ``grupa_pb`` typu
+`QButtonGroup <https://doc.qt.io/qt-6/qbuttongroup.html>`_. Dzięki wywołaniu metody
+``setExclusive(False)`` będzie można zaznaczać (w tym przypadku wciskać) wiele przycisków
+na raz.
+
+Przyciski tworzymy w pętli ``for``: ``self.btn = QPushButton(v)``.
+Każdy przycisk przekształcamy na stanowy, tj. taki który może być trwale wciśnięty,
+za pomocą metody ``setCheckable(True)``. Następnie przycisk dodajemy do grupy,
+która umożliwiała będzie zaznaczenie (wciśnięcie przycisku): ``self.grupa_pb.addButton(self.btn)``
+– oraz do układu poziomego ``uklad_pb``.
 
 Układ dodajemy do ramki typu `QGroupBox <https://doc.qt.io/qt-6/qgroupbox.html>`_ z przyciskiem *CheckBox*:
 ``self.grupa_pbb.setCheckable(True)``. Na początku ramkę wyłączamy: ``self.grupaPBtn.setChecked(False)``.
+
 Ramkę z przyciskami musimy dodać do głównego układu okna za pomocą metody ``addWidget()``.
 Kod powinien wyglądać następująco:
 
@@ -597,15 +601,14 @@ Kod powinien wyglądać następująco:
 .. highlight:: python
 .. literalinclude:: gui_z5.py
     :linenos:
-    :lineno-start: 109
-    :lines: 109-115
+    :lineno-start: 110
+    :lines: 110-116
     :emphasize-lines: 6
 
 Obsługa sygnałów
 ================
 
-W pliku :file:`widzety.py` jak zwykle dopisujemy obsługę sygnałów w konstruktorze
-i jedną nową funkcję:
+W pliku :file:`widzety.py` jak zwykle dopisujemy obsługę sygnałów w konstruktorze:
 
 .. raw:: html
 
@@ -615,15 +618,28 @@ i jedną nową funkcję:
 .. literalinclude:: widzety_z5.py
     :linenos:
     :lineno-start: 32
-    :lines: 32-42
+    :lines: 32-36
 
 Pętla ``for btn in self.grupa_pb.buttons():`` odczytuje kolejne przyciski
-z grupy ``grupa_pb`` i kliknięcie każdego wiąże ze nowym slotem:
-``btn.clicked.connect(self.ustaw_kanal_pb)``. Zadaniem funkcji
-jest dodawanie kanału do zbioru, jeżeli przycisk został wciśnięty,
-i usuwanie ich ze zbioru w przeciwnym razie. Inaczej niż w poprzednich
-funkcjach, obsługujących przyciski *Radio* i listę *ComboBox*, nie resetujemy
-tu zbioru kanałów.
+z grupy ``grupa_pb`` i kliknięcie każdego wiąże z nowym slotem:
+``btn.clicked.connect(self.ustaw_kanal_pb)``.
+
+Kod metody ``ustaw_kanal_pb()`` dodajemy do klasy ``Widgety``:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>widzety.py</i>. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+
+.. highlight:: python
+.. literalinclude:: widzety_z5.py
+    :linenos:
+    :lineno-start: 98
+    :lines: 98-104
+
+Zadaniem slotu jest dodawanie kanału do zbioru, jeżeli przycisk został wciśnięty,
+tj. argument ``wartosc`` ustawiony jest na True, i usuwanie ich ze zbioru w przeciwnym razie.
+Inaczej niż w poprzednich metodach, obsługujących przyciski *Radio* i listę *ComboBox*,
+nie resetujemy tu zbioru kanałów.
 
 Przetestuj zmodyfikowaną aplikację.
 
@@ -636,13 +652,13 @@ Dodamy do aplikacji zestaw widżetów wyświetlających aktywne kanały jako ety
 typu `QLabel <https://doc.qt.io/qt-6/qlabel.html>`_ oraz wartości składowych koloru
 jako 1-liniowe pola edycyjne typu `QLineEdit <https://doc.qt.io/qt-6/qlineedit.html>`_.
 
-**Importy** w pliku :file:`gui.py`:
+W pliku :file:`gui.py` dodajemy importy:
 
 .. code-block:: python
 
     from PyQt6.QtWidgets import QLabel, QLineEdit
 
-Następnie po komentarzu ``# koniec PushButton ###`` uzupełnij funkcję ``setupUi()``:
+Następnie po komentarzu ``# koniec PushButton`` uzupełnij konstruktor klasy ``UiWidget``:
 
 .. raw:: html
 
@@ -651,23 +667,32 @@ Następnie po komentarzu ``# koniec PushButton ###`` uzupełnij funkcję ``setup
 .. highlight:: python
 .. literalinclude:: gui_z6.py
     :linenos:
-    :lineno-start: 110
-    :lines: 110-124
+    :lineno-start: 111
+    :lines: 111-126
     :emphasize-lines: 10-11
 
 Zaczynamy od utworzenia trzech etykiet i trzech pól edycyjnych dla każdego kanału.
 W pętli wykorzystujemy funkcję Pythona
 `getattr(obiekt, nazwa) <https://docs.python.org/3/library/functions.html#getattr>`_,
-która potrafi zwrócić podany jako ``nazwa`` atrybut ``obiektu``. W tym wypadku
+która potrafi zwrócić podany jako ``nazwa`` atrybut ``obiektu``. W tym przypadku
 kolejne etykiety i pola edycyjne, które umieszczamy obok siebie w poziomie.
 Przy okazji ograniczamy długość wpisywanego w pola edycyjne tekstu do 3 znaków:
 ``kolor.setMaxLength(3)``.
 
-**Uwaga**: Pamiętajmy, że aby zobaczyć utworzone obiekty w oknie aplikacji, musimy dołączyć
-je do głównego układu okna: ``ukladOkna.addLayout(ukladH4)``.
+Układ ``uklad_h4`` trzeba jeszcze dodać do głównego układu okna:
 
-W pliku :file:`widzety.py` rozszerzamy konstruktor klasy ``Widgety`` i dodajemy
-funkcję informacyjną:
+.. raw:: html
+
+    <div class="code_no">Plik <i>gui.py</i>. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+
+.. code-block:: python
+
+        uklad_okna.addLayout(uklad_h4)
+
+Obsługa sygnałów
+================
+
+W pliku :file:`widzety.py` rozszerzamy konstruktor klasy ``Widgety``:
 
 .. raw:: html
 
@@ -676,31 +701,43 @@ funkcję informacyjną:
 .. highlight:: python
 .. literalinclude:: widzety_z6.py
     :linenos:
-    :lineno-start: 36
-    :lines: 36-57
+    :lineno-start: 37
+    :lines: 37-41
 
 W pętli, podobnej jak w pliku interfejsu, sygnał zmiany tekstu pola typu *QLineEdit*
-wiążemy z dodaną wcześniej funkcją ``zmienKolor()``. Będziemy mogli wpisywać w tych
-polach nowe wartości składowych koloru. **Ale uwaga**: do tej pory funkcja ``zmienKolor()``
-otrzymywała wartości typu całkowitego z suwaka *QSlider* lub pola *QSpinBox*. Pole edycyjne
-zwraca natomiast tekst, który trzeba rzutować na typ całkowity.
-Dodaj więc na początku funkcji instrukcję: ``wartosc = int(wartosc)``.
+wiążemy z dodaną wcześniej metodą ``zmien_kolor()``. Będziemy mogli wpisywać w tych
+polach nowe wartości składowych koloru.
 
-Druga nowa rzecz to funkcja informacyjna ``info()``. Jej zadanie polega na wyróżnieniu
-aktywnych kanałów poprzez pogrubienie czcionki etykiet i uaktywnieniu odpowiednich pól edycyjnych.
-Jeżeli kanał jest nieaktywny, ustawiamy normalną czcionkę etykiety i wyłączamy pole edycji.
-Wszystko dzieje się w pętli wykorzystującej omawiane już funkcje ``getattr()`` oraz ``setEnabled()``.
+**Ale uwaga**: do tej pory funkcja ``zmien_kolor()`` otrzymywała wartości typu całkowitego
+z suwaka *QSlider* lub pola *QSpinBox*. Pole edycyjne zwraca natomiast tekst, który trzeba rzutować na typ całkowity.
+Dodajemy więc na początku funkcji instrukcję: ``wartosc = int(wartosc)``.
+
+Druga nowa rzecz to metoda ``info()``, którą dopisujemy do klasy ``Widgety``:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>widzety.py</i>. Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></div>
+
+.. highlight:: python
+.. literalinclude:: widzety_z6.py
+    :linenos:
+    :lineno-start: 112
+    :lines: 112-129
+
+Jej zadanie polega na wyróżnieniu kanałów znajdujących się w zbiorze ``kanaly`` poprzez pogrubienie czcionki etykiet
+i uaktywnieniu odpowiednich pól edycyjnych. Jeżeli kanał jest nieaktywny, ustawiamy normalną czcionkę etykiety i wyłączamy pole edycji.
+Wszystko dzieje się w pętli wykorzystującej omawianą już funkcję ``getattr()`` do uzyskania dostępu
+do kolejnych obiektów.
 
 Na uwagę zasługują operacje na czcionce. Zmieniamy ją dzięki stylom CSS zdefiniowanym na
-początku funkcji pod nazwą ``fontB`` i ``fontN``. Później przypisujemy je etykietom
+początku funkcji pod nazwą ``font_b`` i ``font_n``. Później przypisujemy je etykietom
 za pomocą metody ``setStyleSheet()``.
 
 Na końcu omawianej funkcji do każdego pola edycyjnego wstawiamy aktualną wartość
-odpowiedniej składowej koloru przekształconą na tekst,
-np. ``self.kolorR.setText(str(self.kolorW.red()))``.
+odpowiedniej składowej koloru przekształconą na tekst, np. ``self.kolorR.setText(str(self.kolorW.red()))``.
 
 Wywołanie tej funkcji w postaci ``self.info()`` powinniśmy dopisać przynajmniej
-do funkcji ``zmienKolor()``.
+do funkcji ``zmien_kolor()``.
 
 Wprowadź omówione zmiany i przetestuj działanie aplikacji.
 

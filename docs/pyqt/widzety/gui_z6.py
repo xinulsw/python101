@@ -60,16 +60,16 @@ class UiWidget:
             self.radio = QRadioButton(v)
             self.uklad_r.addWidget(self.radio)
         self.uklad_r.itemAt(0).widget().setChecked(True)
-        
+
         # grupujemy przyciski
-        self.grupa_rb = QGroupBox('Opcje RGB')
-        self.grupa_rb.setLayout(self.uklad_r)
-        self.grupa_rb.setObjectName('Radio')
-        self.grupa_rb.setCheckable(True)
-        
+        self.grupa_rbb = QGroupBox('Opcje RGB')
+        self.grupa_rbb.setLayout(self.uklad_r)
+        self.grupa_rbb.setObjectName('Radio')
+        self.grupa_rbb.setCheckable(True)
+
         # układ poziomy dla grupy Radio
         uklad_h3 = QHBoxLayout()
-        uklad_h3.addWidget(self.grupa_rb)
+        uklad_h3.addWidget(self.grupa_rbb)
         # koniec RadioButton
 
         # Lista ComboBox i SpinBox
@@ -134,4 +134,3 @@ class UiWidget:
 
         # ustawienie głównego układu okna
         self.setLayout(uklad_okna)
-        

@@ -25,7 +25,7 @@ class Widgety(QWidget, UiWidget):
         self.suwak.valueChanged.connect(self.zmien_kolor)
 
         # Lista ComboBox i SpinBox
-        self.grupa_rb.clicked.connect(self.ustaw_stan)
+        self.grupa_rbb.clicked.connect(self.ustaw_stan)
         self.lista_rgb.currentTextChanged.connect(self.ustaw_kanal)
         self.spin_rgb.valueChanged.connect(self.zmien_kolor)
 
@@ -87,9 +87,9 @@ class Widgety(QWidget, UiWidget):
             self.kolor_w.red(),
             self.kolor_w.green(),
             self.kolor_w.blue())
+        self.info()
 
     def ustaw_stan(self, wartosc):
-        print('Ustaw_stan', wartosc)
         if wartosc:
             # włączone przyciski RadioButton
             self.lista_rgb.setEnabled(False)
@@ -113,9 +113,9 @@ class Widgety(QWidget, UiWidget):
         font_b = "QWidget { font-weight: bold }"
         font_n = "QWidget { font-weight: normal }"
 
-        for v in ('R', 'G', 'B'):
-            label = getattr(self, 'label' + v)
-            kolor = getattr(self, 'kolor' + v)
+        for v in ('rgb'):
+            label = getattr(self, 'label_' + v)
+            kolor = getattr(self, 'kolor_' + v)
             if v in self.kanaly:
                 label.setStyleSheet(font_b)
                 kolor.setEnabled(True)
