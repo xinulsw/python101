@@ -1,7 +1,8 @@
-from PyQt6.QtWidgets import QApplication, QWidget
+from PyQt6.QtWidgets import QApplication, QWidget, QPushButton
 from gui_z6 import UiWidget
 from PyQt6.QtGui import QColor
 from PyQt6.QtWidgets import QRadioButton, QComboBox
+from PyQt6.QtWidgets import QLineEdit
 
 
 class Widgety(QWidget, UiWidget):
@@ -31,13 +32,16 @@ class Widgety(QWidget, UiWidget):
 
         # przyciski PushButton
         for btn in self.grupa_pb.buttons():
-            btn.clicked.connect(self.ustaw_kanal_pb)
+            btn.clicked.connect(self.ustaw_kanal)
         self.grupa_pbb.clicked.connect(self.ustaw_stan)
 
         # etykiety QLabel i pola QEditLine
         for v in 'rgb':
-            kolor = getattr(self, 'kolor_' + v)
-            kolor.textEdited.connect(self.zmien_kolor)
+            kolor = getattr(self, 'edit_' + v)
+            kolor.editingFinished.connect(self.ustaw_kanal)
+            kolor.editingFinished.connect(self.zmien_kolor)
+            # slot = getattr(self, 'zmien_kolor_' + v)
+            # kolor.editingFinished.connect(slot)
 
     def ustaw_ksztalt(self):
         self.ksztalt_aktywny.ustaw_ksztalt(self.grupa_chk.checkedId())
@@ -53,18 +57,31 @@ class Widgety(QWidget, UiWidget):
         przyciski = self.grupa_chk.buttons()
         przyciski[self.ksztalt_aktywny.ksztalt].setChecked(True)
 
-    def ustaw_kanal(self, wartosc):
-        self.kanaly = set()  # resetujemy zbiór kanałów
+    def ustaw_kanal(self, wartosc=''):
         nadawca = self.sender()
         if isinstance(nadawca, QRadioButton) and wartosc:
             # nadawca to QRadioButton
+            self.kanaly = set()  # resetujemy zbiór kanałów
             kanal = nadawca.text()
             self.kanaly.add(kanal)
             self.wypisz_kanal(kanal, self.suwak)
         elif isinstance(nadawca, QComboBox):
             # nadawca to QComboBox
+            self.kanaly = set()  # resetujemy zbiór kanałów
             self.kanaly.add(wartosc)
             self.wypisz_kanal(wartosc, self.spin_rgb)
+        elif isinstance(nadawca, QPushButton):
+            if wartosc:
+                self.kanaly.add(nadawca.text())
+            else:
+                self.kanaly.remove(nadawca.text())
+            print('Kanały:', self.kanaly)
+        elif isinstance(nadawca, QLineEdit):
+            self.kanaly = set()
+            kanal = nadawca.objectName()[-1].upper()
+            self.kanaly.add(kanal)
+
+        print('Kanały:', self.kanaly)
 
     def wypisz_kanal(self, kanal, obiekt):
         if kanal == 'R':
@@ -74,8 +91,10 @@ class Widgety(QWidget, UiWidget):
         else:
             obiekt.setValue(self.kolor_w.blue())
 
-    def zmien_kolor(self, wartosc):
+    def zmien_kolor(self, wartosc=0):
         wartosc = int(wartosc)
+        if isinstance(self.sender(), QLineEdit):
+            wartosc = int(self.sender().text())
         self.lcd.display(wartosc)
         if 'R' in self.kanaly:
             self.kolor_w.setRed(wartosc)
@@ -109,23 +128,36 @@ class Widgety(QWidget, UiWidget):
         else:
             self.kanaly.remove(nadawca.text())
 
+    def zmien_kolor_r(self):
+        wartosc = int(self.sender().text())
+        self.kolor_w.setRed(wartosc)
+        self.info()
+
+    def zmien_kolor_g(self):
+        wartosc = int(self.sender().text())
+        self.kolor_w.setGreen(wartosc)
+        self.info()
+
+    def zmien_kolor_b(self):
+        wartosc = int(self.sender().text())
+        self.kolor_w.setBlue(wartosc)
+        self.info()
+
     def info(self):
         font_b = "QWidget { font-weight: bold }"
         font_n = "QWidget { font-weight: normal }"
 
         for v in ('rgb'):
             label = getattr(self, 'label_' + v)
-            kolor = getattr(self, 'kolor_' + v)
-            if v in self.kanaly:
+            # kolor = getattr(self, 'kolor_' + v)
+            if v.upper() in self.kanaly:
                 label.setStyleSheet(font_b)
-                kolor.setEnabled(True)
             else:
                 label.setStyleSheet(font_n)
-                kolor.setEnabled(False)
 
-        self.kolor_r.setText(str(self.kolor_w.red()))
-        self.kolor_g.setText(str(self.kolor_w.green()))
-        self.kolor_b.setText(str(self.kolor_w.blue()))
+        self.edit_r.setText(str(self.kolor_w.red()))
+        self.edit_g.setText(str(self.kolor_w.green()))
+        self.edit_b.setText(str(self.kolor_w.blue()))
 
 
 if __name__ == '__main__':

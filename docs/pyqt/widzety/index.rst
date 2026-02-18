@@ -648,9 +648,9 @@ Przetestuj zmodyfikowaną aplikację.
 QLabel i QLineEdit
 ******************
 
-Dodamy do aplikacji zestaw widżetów wyświetlających aktywne kanały jako etykiety
-typu `QLabel <https://doc.qt.io/qt-6/qlabel.html>`_ oraz wartości składowych koloru
-jako 1-liniowe pola edycyjne typu `QLineEdit <https://doc.qt.io/qt-6/qlineedit.html>`_.
+Dodamy do aplikacji zestaw widżetów typu `QLineEdit <https://doc.qt.io/qt-6/qlineedit.html>`_, tzn. 1-liniowych pól edycyjnych.
+Pola będą oznaczone etykietami typu `QLabel <https://doc.qt.io/qt-6/qlabel.html>` i będą umożliwały
+ustawienia składowych koloru wypełnienia akywnego kształtu.
 
 W pliku :file:`gui.py` dodajemy importy:
 
