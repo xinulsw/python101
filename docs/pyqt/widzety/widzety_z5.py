@@ -2,6 +2,7 @@ from PyQt6.QtWidgets import QApplication, QWidget
 from gui_z5 import UiWidget
 from PyQt6.QtGui import QColor
 from PyQt6.QtWidgets import QRadioButton, QComboBox
+from PyQt6.QtWidgets import QPushButton
 
 
 class Widgety(QWidget, UiWidget):
@@ -31,7 +32,7 @@ class Widgety(QWidget, UiWidget):
 
         # przyciski PushButton
         for btn in self.grupa_pb.buttons():
-            btn.clicked.connect(self.ustaw_kanal_pb)
+            btn.clicked.connect(self.ustaw_kanal)
         self.grupa_pbb.clicked.connect(self.ustaw_stan)
 
     def ustaw_ksztalt(self):
@@ -49,17 +50,23 @@ class Widgety(QWidget, UiWidget):
         przyciski[self.ksztalt_aktywny.ksztalt].setChecked(True)
 
     def ustaw_kanal(self, wartosc):
-        self.kanaly = set()  # resetujemy zbiór kanałów
         nadawca = self.sender()
         if isinstance(nadawca, QRadioButton) and wartosc:
             # nadawca to QRadioButton
+            self.kanaly = set()  # resetujemy zbiór kanałów
             kanal = nadawca.text()
             self.kanaly.add(kanal)
             self.wypisz_kanal(kanal, self.suwak)
         elif isinstance(nadawca, QComboBox):
             # nadawca to QComboBox
+            self.kanaly = set()  # resetujemy zbiór kanałów
             self.kanaly.add(wartosc)
             self.wypisz_kanal(wartosc, self.spin_rgb)
+        elif isinstance(nadawca, QPushButton):
+            if wartosc:
+                self.kanaly.add(nadawca.text())
+            else:
+                self.kanaly.remove(nadawca.text())
 
     def wypisz_kanal(self, kanal, obiekt):
         if kanal == 'R':
@@ -94,13 +101,6 @@ class Widgety(QWidget, UiWidget):
             self.kanaly = set()
             self.kanaly.add(self.lista_rgb.currentText())
             self.wypisz_kanal(wartosc, self.spin_rgb)
-
-    def ustaw_kanal_pb(self, wartosc):
-        nadawca = self.sender()
-        if wartosc:
-            self.kanaly.add(nadawca.text())
-        elif wartosc in self.kanaly:
-            self.kanaly.remove(nadawca.text())
 
 
 if __name__ == '__main__':

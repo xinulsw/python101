@@ -39,10 +39,10 @@ class Widgety(QWidget, UiWidget):
         przyciski[self.ksztalt_aktywny.ksztalt].setChecked(True)
 
     def ustaw_kanal(self, wartosc):
-        self.kanaly = set()  # resetujemy zbiór kanałów
         nadawca = self.sender()
         if isinstance(nadawca, QRadioButton) and wartosc:
             # nadawca to QRadioButton
+            self.kanaly = set()  # resetujemy zbiór kanałów
             kanal = nadawca.text()
             self.kanaly.add(kanal)
             self.wypisz_kanal(kanal, self.suwak)

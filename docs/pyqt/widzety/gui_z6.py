@@ -73,7 +73,7 @@ class UiWidget:
         # koniec RadioButton
 
         # Lista ComboBox i SpinBox
-        self.lista_rgb = QComboBox(self)
+        self.lista_rgb = QComboBox()
         for v in 'RGB':
             self.lista_rgb.addItem(v)
         self.lista_rgb.setEnabled(False)
@@ -94,12 +94,12 @@ class UiWidget:
         # przyciski PushButton
         uklad_pb = QHBoxLayout()
         self.grupa_pb = QButtonGroup()
-        self.grupa_pb.setExclusive(False)
         for v in 'RGB':
             self.btn = QPushButton(v)
             self.btn.setCheckable(True)
             self.grupa_pb.addButton(self.btn)
             uklad_pb.addWidget(self.btn)
+        self.grupa_pb.setExclusive(False)
         # grupujemy przyciski
         self.grupa_pbb = QGroupBox('Przyciski RGB')
         self.grupa_pbb.setLayout(uklad_pb)
@@ -117,13 +117,12 @@ class UiWidget:
         self.edit_g = QLineEdit('0')
         self.edit_b = QLineEdit('0')
         for v in 'rgb':
+            label = getattr(self, 'label_' + v)
             edit = getattr(self, 'edit_' + v)
             edit.setObjectName('edit_' + v)
-            label = getattr(self, 'label_' + v)
-            kolor = getattr(self, 'edit_' + v)
+            edit.setMaxLength(3)
             uklad_h4.addWidget(label)
-            uklad_h4.addWidget(kolor)
-            kolor.setMaxLength(3)
+            uklad_h4.addWidget(edit)
         # koniec QLabel i QLineEdit
 
         # główny układ okna, pionowy

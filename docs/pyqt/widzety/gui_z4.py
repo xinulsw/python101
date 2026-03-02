@@ -71,8 +71,8 @@ class UiWidget:
         # koniec RadioButton
 
         # Lista ComboBox i SpinBox
-        self.lista_rgb = QComboBox(self)
-        for v in ('R', 'G', 'B'):
+        self.lista_rgb = QComboBox()
+        for v in 'RGB':
             self.lista_rgb.addItem(v)
         self.lista_rgb.setEnabled(False)
         # SpinBox

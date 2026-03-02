@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import QApplication, QWidget
-from gui_z6 import UiWidget
+from gui_z7 import UiWidget
 from PyQt6.QtGui import QColor
 from PyQt6.QtWidgets import QRadioButton, QComboBox
 
@@ -35,9 +35,9 @@ class Widgety(QWidget, UiWidget):
         self.grupa_pbb.clicked.connect(self.ustaw_stan)
 
         # etykiety QLabel i pola QEditLine
-        for v in 'rgb':
-            kolor = getattr(self, 'kolor_' + v)
-            kolor.textEdited.connect(self.zmien_kolor)
+        for e in self.edits:
+            e.editingFinished.connect(self.ustaw_kanal)
+            e.editingFinished.connect(self.zmien_kolor)
 
     def ustaw_ksztalt(self):
         self.ksztalt_aktywny.ustaw_ksztalt(self.grupa_chk.checkedId())
@@ -123,7 +123,8 @@ class Widgety(QWidget, UiWidget):
 
     def ustaw_kanal_pb(self, wartosc):
         nadawca = self.sender()
-        kolor = getattr(self, 'kolor_' + nadawca.text().lower())
+        kolor = self.edits['rgb'.index(nadawca.text().lower())]
+            # getattr(self, 'kolor_' + nadawca.text().lower())
         if wartosc:
             self.kanaly.add(nadawca.text())
             kolor.setEnabled(True)
@@ -135,9 +136,11 @@ class Widgety(QWidget, UiWidget):
         font_b = "QWidget { font-weight: bold }"
         font_n = "QWidget { font-weight: normal }"
 
-        for v in ('rgb'):
-            label = getattr(self, 'label_' + v)
-            kolor = getattr(self, 'kolor_' + v)
+        for i, v in enumerate('rgb'):
+            # label = getattr(self, 'label_' + v)
+            # kolor = getattr(self, 'kolor_' + v)
+            label = self.labels[i]
+            kolor = self.edits[i]
             if v in self.kanaly:
                 label.setStyleSheet(font_b)
                 kolor.setEnabled(True)
@@ -145,9 +148,9 @@ class Widgety(QWidget, UiWidget):
                 label.setStyleSheet(font_n)
                 kolor.setEnabled(False)
 
-        self.kolor_r.setText(str(self.kolor_w.red()))
-        self.kolor_g.setText(str(self.kolor_w.green()))
-        self.kolor_b.setText(str(self.kolor_w.blue()))
+        self.edits[0].setText(str(self.kolor_w.red()))
+        self.edits[1].setText(str(self.kolor_w.green()))
+        self.edits[2].setText(str(self.kolor_w.blue()))
 
 
 if __name__ == '__main__':

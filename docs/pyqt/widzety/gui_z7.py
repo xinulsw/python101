@@ -62,18 +62,18 @@ class UiWidget:
         self.uklad_r.itemAt(0).widget().setChecked(True)
         
         # grupujemy przyciski
-        self.grupa_rb = QGroupBox('Opcje RGB')
-        self.grupa_rb.setLayout(self.uklad_r)
-        self.grupa_rb.setObjectName('Radio')
-        self.grupa_rb.setCheckable(True)
+        self.grupa_rbb = QGroupBox('Opcje RGB')
+        self.grupa_rbb.setLayout(self.uklad_r)
+        self.grupa_rbb.setObjectName('Radio')
+        self.grupa_rbb.setCheckable(True)
         
         # układ poziomy dla grupy Radio
         uklad_h3 = QHBoxLayout()
-        uklad_h3.addWidget(self.grupa_rb)
+        uklad_h3.addWidget(self.grupa_rbb)
         # koniec RadioButton
 
         # Lista ComboBox i SpinBox
-        self.lista_rgb = QComboBox(self)
+        self.lista_rgb = QComboBox()
         for v in 'RGB':
             self.lista_rgb.addItem(v)
         self.lista_rgb.setEnabled(False)
@@ -94,12 +94,12 @@ class UiWidget:
         # przyciski PushButton
         uklad_pb = QHBoxLayout()
         self.grupa_pb = QButtonGroup()
-        self.grupa_pb.setExclusive(False)
         for v in 'RGB':
             self.btn = QPushButton(v)
             self.btn.setCheckable(True)
             self.grupa_pb.addButton(self.btn)
             uklad_pb.addWidget(self.btn)
+        self.grupa_pb.setExclusive(False)
         # grupujemy przyciski
         self.grupa_pbb = QGroupBox('Przyciski RGB')
         self.grupa_pbb.setLayout(uklad_pb)
@@ -110,18 +110,25 @@ class UiWidget:
 
         # etykiety QLabel i pola QLineEdit
         uklad_h4 = QHBoxLayout()
-        self.label_r = QLabel('R')
-        self.label_g = QLabel('G')
-        self.label_b = QLabel('B')
-        self.kolor_r = QLineEdit('0')
-        self.kolor_g = QLineEdit('0')
-        self.kolor_b = QLineEdit('0')
+        self.labels = []
+        self.edits = []
+        # self.label_r = QLabel('R')
+        # self.label_g = QLabel('G')
+        # self.label_b = QLabel('B')
+        # self.kolor_r = QLineEdit('0')
+        # self.kolor_g = QLineEdit('0')
+        # self.kolor_b = QLineEdit('0')
         for v in 'rgb':
-            label = getattr(self, 'label_' + v)
-            kolor = getattr(self, 'kolor_' + v)
+            label = QLabel(v.upper())
+            self.labels.append(label)
+            edit = QLineEdit('0')
+            self.edits.append(edit)
+            edit.setMaxLength(3)
+            # label = getattr(self, 'label_' + v)
+            # kolor = getattr(self, 'kolor_' + v)
             uklad_h4.addWidget(label)
-            uklad_h4.addWidget(kolor)
-            kolor.setMaxLength(3)
+            uklad_h4.addWidget(edit)
+
         # koniec QLabel i QLineEdit
 
         # główny układ okna, pionowy

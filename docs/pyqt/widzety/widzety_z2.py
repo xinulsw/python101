@@ -18,7 +18,6 @@ class Widgety(QWidget, UiWidget):
         self.ksztalt_aktywny.ustaw_ksztalt(self.grupa_chk.checkedId())
 
     def aktywuj_ksztalt(self, wartosc):
-        print(wartosc)
         nadawca = self.sender()
         if wartosc:
             self.ksztalt_aktywny = self.ksztalt1

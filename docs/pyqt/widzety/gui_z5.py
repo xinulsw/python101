@@ -72,8 +72,8 @@ class UiWidget:
         # koniec RadioButton
 
         # Lista ComboBox i SpinBox
-        self.lista_rgb = QComboBox(self)
-        for v in ('R', 'G', 'B'):
+        self.lista_rgb = QComboBox()
+        for v in 'RGB':
             self.lista_rgb.addItem(v)
         self.lista_rgb.setEnabled(False)
         # SpinBox
@@ -93,12 +93,12 @@ class UiWidget:
         # przyciski PushButton
         uklad_pb = QHBoxLayout()
         self.grupa_pb = QButtonGroup()
-        self.grupa_pb.setExclusive(False)
-        for v in ('R', 'G', 'B'):
+        for v in 'RGB':
             self.btn = QPushButton(v)
             self.btn.setCheckable(True)
             self.grupa_pb.addButton(self.btn)
             uklad_pb.addWidget(self.btn)
+        self.grupa_pb.setExclusive(False)
         # grupujemy przyciski
         self.grupa_pbb = QGroupBox('Przyciski RGB')
         self.grupa_pbb.setLayout(uklad_pb)

@@ -1,7 +1,8 @@
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton
+from PyQt6.QtWidgets import QApplication, QWidget
 from gui_z6 import UiWidget
 from PyQt6.QtGui import QColor
 from PyQt6.QtWidgets import QRadioButton, QComboBox
+from PyQt6.QtWidgets import QPushButton
 from PyQt6.QtWidgets import QLineEdit
 
 
@@ -37,11 +38,9 @@ class Widgety(QWidget, UiWidget):
 
         # etykiety QLabel i pola QEditLine
         for v in 'rgb':
-            kolor = getattr(self, 'edit_' + v)
-            kolor.editingFinished.connect(self.ustaw_kanal)
-            kolor.editingFinished.connect(self.zmien_kolor)
-            # slot = getattr(self, 'zmien_kolor_' + v)
-            # kolor.editingFinished.connect(slot)
+            edit = getattr(self, 'edit_' + v)
+            edit.editingFinished.connect(self.ustaw_kanal)
+            edit.editingFinished.connect(self.zmien_kolor)
 
     def ustaw_ksztalt(self):
         self.ksztalt_aktywny.ustaw_ksztalt(self.grupa_chk.checkedId())
@@ -75,13 +74,10 @@ class Widgety(QWidget, UiWidget):
                 self.kanaly.add(nadawca.text())
             else:
                 self.kanaly.remove(nadawca.text())
-            print('Kanały:', self.kanaly)
         elif isinstance(nadawca, QLineEdit):
-            self.kanaly = set()
+            self.kanaly = set()  # resetujemy zbiór kanałów
             kanal = nadawca.objectName()[-1].upper()
             self.kanaly.add(kanal)
-
-        print('Kanały:', self.kanaly)
 
     def wypisz_kanal(self, kanal, obiekt):
         if kanal == 'R':
@@ -92,7 +88,6 @@ class Widgety(QWidget, UiWidget):
             obiekt.setValue(self.kolor_w.blue())
 
     def zmien_kolor(self, wartosc=0):
-        wartosc = int(wartosc)
         if isinstance(self.sender(), QLineEdit):
             wartosc = int(self.sender().text())
         self.lcd.display(wartosc)
@@ -121,35 +116,12 @@ class Widgety(QWidget, UiWidget):
             self.kanaly.add(self.lista_rgb.currentText())
             self.wypisz_kanal(wartosc, self.spin_rgb)
 
-    def ustaw_kanal_pb(self, wartosc):
-        nadawca = self.sender()
-        if wartosc:
-            self.kanaly.add(nadawca.text())
-        else:
-            self.kanaly.remove(nadawca.text())
-
-    def zmien_kolor_r(self):
-        wartosc = int(self.sender().text())
-        self.kolor_w.setRed(wartosc)
-        self.info()
-
-    def zmien_kolor_g(self):
-        wartosc = int(self.sender().text())
-        self.kolor_w.setGreen(wartosc)
-        self.info()
-
-    def zmien_kolor_b(self):
-        wartosc = int(self.sender().text())
-        self.kolor_w.setBlue(wartosc)
-        self.info()
-
     def info(self):
         font_b = "QWidget { font-weight: bold }"
         font_n = "QWidget { font-weight: normal }"
 
-        for v in ('rgb'):
+        for v in 'rgb':
             label = getattr(self, 'label_' + v)
-            # kolor = getattr(self, 'kolor_' + v)
             if v.upper() in self.kanaly:
                 label.setStyleSheet(font_b)
             else:
