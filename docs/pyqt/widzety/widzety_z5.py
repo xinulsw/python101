@@ -65,7 +65,7 @@ class Widgety(QWidget, UiWidget):
         elif isinstance(nadawca, QPushButton):
             if wartosc:
                 self.kanaly.add(nadawca.text())
-            else:
+            elif nadawca.text() in self.kanaly:
                 self.kanaly.remove(nadawca.text())
 
     def wypisz_kanal(self, kanal, obiekt):

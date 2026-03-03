@@ -587,7 +587,7 @@ Następnie po komentarzu ``# koniec ComboBox i SpinBox`` dopisujemy kod w konstr
     :linenos:
     :lineno-start: 93
     :lines: 93-109
-    :emphasize-lines: 4, 6-8
+    :emphasize-lines: 4-8
 
 Przyciski tworzymy podobnie jak wcześniej w pętli za pomocą instrukcji: ``self.btn = QPushButton(v)``.
 Każdy przycisk przekształcamy na stanowy, tj. taki który może być trwale wciśnięty,
@@ -667,7 +667,7 @@ QLabel i QLineEdit
 ******************
 
 Dodamy do aplikacji zestaw widżetów typu `QLineEdit <https://doc.qt.io/qt-6/qlineedit.html>`_, tzn. 1-liniowych pól edycyjnych.
-Pola będą oznaczone etykietami typu `QLabel <https://doc.qt.io/qt-6/qlabel.html>` i będą umożliwiały
+Pola będą oznaczone etykietami typu `QLabel <https://doc.qt.io/qt-6/qlabel.html>`_ i będą umożliwiały
 ustawienia składowych koloru wypełnienia aktywnego kształtu.
 
 W pliku :file:`gui.py` dodajemy importy:
@@ -750,7 +750,7 @@ który dodajemy do zbioru kanałów.
 
 Następnie zmieniamy metodę ``zmien_kolor()``, która do tej pory otrzymywała wartości typu całkowitego
 z suwaka *QSlider* lub pola *QSpinBox*. Pole edycyjne zwraca liczbę, ale w postaci tekstu, który trzeba
-zamienić typ całkowity. Dodajemy więc na początku metody instrukcję:
+zamienić na typ całkowity. Dodajemy więc na początku metody instrukcję:
 
 .. raw:: html
 
@@ -760,11 +760,12 @@ zamienić typ całkowity. Dodajemy więc na początku metody instrukcję:
 .. literalinclude:: widzety_z6.py
     :linenos:
     :lineno-start: 90
-    :lines: 90-92
+    :lines: 90-93
+    :emphasize-lines: 2-3
 
-Na końcu omawianej metody umieszczamy wywołanie nowej metody: ``self.info()``.
+Natomiast na końcu omawianej metody umieszczamy wywołanie nowej metody: ``self.info()``.
 
-Druga nowa rzecz to metoda ``info()``, którą dopisujemy do klasy ``Widgety``:
+Kod metody ``info()`` dopisujemy do klasy ``Widgety``:
 
 .. raw:: html
 
@@ -773,23 +774,19 @@ Druga nowa rzecz to metoda ``info()``, którą dopisujemy do klasy ``Widgety``:
 .. highlight:: python
 .. literalinclude:: widzety_z6.py
     :linenos:
-    :lineno-start: 112
-    :lines: 112-129
+    :lineno-start: 119
+    :lines: 119-133
 
 Jej zadanie polega na wyróżnieniu kanałów znajdujących się w zbiorze ``kanaly`` poprzez pogrubienie czcionki etykiet
-i uaktywnieniu odpowiednich pól edycyjnych. Jeżeli kanał jest nieaktywny, ustawiamy normalną czcionkę etykiety i wyłączamy pole edycji.
-Wszystko dzieje się w pętli wykorzystującej omawianą już funkcję ``getattr()`` do uzyskania dostępu
-do kolejnych obiektów.
+i uaktywnieniu odpowiednich pól edycyjnych. Jeżeli kanał jest nieaktywny, ustawiamy normalną czcionkę etykiety
+i wyłączamy pole edycji. Wszystko dzieje się w pętli wykorzystującej omawianą już funkcję ``getattr()``
+do uzyskania dostępu do kolejnych obiektów. Na końcu metody wartości poszczególnych kanałów koloru
+wpisujemy do odpowiednich pól edycyjnych.
 
-Na uwagę zasługują operacje na czcionce. Zmieniamy ją dzięki stylom CSS zdefiniowanym na
-początku funkcji pod nazwą ``font_b`` i ``font_n``. Później przypisujemy je etykietom
-za pomocą metody ``setStyleSheet()``.
+.. note::
 
-Na końcu omawianej funkcji do każdego pola edycyjnego wstawiamy aktualną wartość
-odpowiedniej składowej koloru przekształconą na tekst, np. ``self.kolorR.setText(str(self.kolorW.red()))``.
-
-Wywołanie tej funkcji w postaci ``self.info()`` powinniśmy dopisać przynajmniej
-do funkcji ``zmien_kolor()``.
+    Typ czcionki zmieniamy z pomocą stylów CSS zdefiniowanym na początku funkcji pod nazwą
+    ``font_b`` i ``font_n``. Później przypisujemy je etykietom za pomocą metody ``setStyleSheet()``.
 
 Wprowadź omówione zmiany i przetestuj działanie aplikacji.
 
@@ -801,78 +798,20 @@ Dodatki
 Nasza aplikacja działa, ale można dopracować w niej kilka szczegółów. Poniżej zaproponujemy
 kilka zmian, które potraktować należy jako zachętę do samodzielnych ćwiczeń i przeróbek.
 
-1. Po pierwsze pola edycyjne *QLineEdit* dla składowych zielonej i niebieskiej powinny
-   być na początku nieaktywne. Dodaj odpowiedni kod do pliku :file:`gui.py`,
-   wykorzystaj metodę ``setEnabled()``.
-2. Zaznaczenie jednej z grup przycisków powinno wyłączać drugą grupę.
-   Jeżeli aktywujemy grupę *Push* dobrze byłoby zaznaczyć przycisk odpowiadający
-   ostatniemu aktywnemu kanałowi. W tym celu trzeba uzupełnić funkcję ``ustawStan()``.
-   Spróbuj użyć poniższego kodu:
-
-.. highlight:: python
-.. code-block:: python
-
-            nadawca = self.sender()
-            if nadawca.objectName() == 'Radio':
-                self.grupaPBtn.setChecked(False)
-            if nadawca.objectName() == 'Push':
-                self.grupa_rb.setChecked(False)
-                for btn in self.grupaP.buttons():
-                    btn.setChecked(False)
-                    if btn.text() in self.kanaly:
-                        btn.setChecked(True)
-
-Ponieważ w(y)łączanie ramek z przyciskami obsługujemy w jednym slocie,
-musimy wiedzieć, która ramka wysłała sygnał. Metoda ``self.sender()``
-zwraca nam nadawcę, a za pomocą metody ``objectName()`` możemy odczytać
-jego nazwę.
-
-Jeżeli ramką źródłową jest ta z przyciskami PushButton,
-w pętli ``for btn in self.grupaP.buttons():`` na początku odznaczamy
-każdy przycisk po to, żeby zaznaczyć go, o ile wskazywany przez niego
-kanał jest w zbiorze.
-
-3. Stan pól edycyjnych powinien odpowiadać stanowi przycisków PushButton,
-   wciśnięty przycisk to aktywne pole i odwrotnie. Dopisz odpowiedni kod
-   do slotu ``ustawKanalPBtn()``. Wykorzystaj funkcję ``getattr``,
-   aby uzyskać dostęp do właściwego pola edycyjnego.
-
-4. Funkcja ``zmienKolor()`` nie jest zabezpieczona przed błędnymi danymi
-   wprowadzanymi do pól edycyjnych. Prześledź komunikaty w konsoli pojawiające
-   się po wpisaniu wartości ujemnych, albo tekstu. Sytuacje takie można obsłużyć
-   dopisując na początku funkcji np. taki kod:
-
-.. highlight:: python
-.. code-block:: python
-
-        try:
-            wartosc = int(wartosc)
-        except ValueError:
-            wartosc = 0
-        if wartosc > 255:
-            wartosc = 255
-
-5. Jak zostało pokazane w aplikacji, nic nie stoi na przeszkodzie, żeby podobne
-   sygnały obsługiwane były przez jeden slot. Niekiedy jednak wymaga to pewnych
-   dodatkowych zabiegów. Można by na przykład spróbować połączyć sloty
-   ``ustawKanalRBtn()`` i ``ustawKanalCBox()`` w jeden ``ustawKanal()``,
-   który mógłby zostać zaimplementowany tak:
-
-.. highlight:: python
-.. code-block:: python
-
-    def ustawKanal(self, wartosc):
-        self.kanaly = set()  # resetujemy zbiór kanałów
-        try:  # ComboBox
-            if len(wartosc) == 1:
-                self.kanaly.add(wartosc)
-        except TypeError:  # RadioButton
-            nadawca = self.sender()
-            if wartosc:
-                self.kanaly.add(nadawca.text())
-
+1. Pola edycyjne *QLineEdit* dla składowych zielonej i niebieskiej powinny
+   być na początku nieaktywne.
+2. Zaznaczenie jednej z grup widżetów powinno wyłączać inne grupy, tj. w danym momencie powinna być
+   aktywna albo grupa przycisków *Radio* albo lista *Combo* albo grupa przycisków *Push* z polami edycyjnymi.
+3. Jeżeli aktywujemy grupę *Push*, należy zaznaczyć (wcisnąć) przycisk odpowiadający
+   ostatniemu aktywnemu kanałowi.
+4. Stan pól edycyjnych powinien odpowiadać stanowi przycisków *Push*,
+   wciśnięty przycisk to aktywne pole i odwrotnie.
+5. Funkcja ``zmien_kolor()`` nie jest zabezpieczona przed błędnymi danymi
+   wprowadzanymi do pól edycyjnych.
 6. Dodaj dwa osobne przyciski, które umożliwią kopiowanie koloru i kształtu z jednej figury
    na drugą.
+7. Dodaj etykietę lub pole edycyjne, które będzie wyświetlało aktualnie ustawiony kolor dla aktywnego
+   kształtu w formacie szesnastkowym.
 
 Materiały
 ***************

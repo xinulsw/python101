@@ -72,7 +72,7 @@ class Widgety(QWidget, UiWidget):
         elif isinstance(nadawca, QPushButton):
             if wartosc:
                 self.kanaly.add(nadawca.text())
-            else:
+            elif nadawca.text() in self.kanaly:
                 self.kanaly.remove(nadawca.text())
         elif isinstance(nadawca, QLineEdit):
             self.kanaly = set()  # resetujemy zbiór kanałów
