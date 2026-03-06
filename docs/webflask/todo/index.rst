@@ -3,39 +3,64 @@
 ToDo
 #####
 
-.. highlight:: python
-
-Aplikacja internetowa **ToDo** w oparciu o :term:`framework` Realizacja aplikacji internetowej Quiz w oparciu
-o :term:`framework` `Flask <https://flask.palletsprojects.com/en/stable/>`_ 3.1.x
-i bazę danych `SQLite <http://pl.wikipedia.org/wiki/SQLite>`_.
+Przykład aplikacji internetowej "Quiz" zrealizowanej w oparciu o :term:`framework`
+`Flask <https://flask.palletsprojects.com/en/stable/>`_ i bazę danych `SQLite <http://pl.wikipedia.org/wiki/SQLite>`_.
 Aplikacja umożliwi dodawanie przez zalogowanego użytkownika zadań z określoną datą,
 ich przeglądanie i oznaczanie jako wykonane.
 
-Zalecamy zapoznanie się z materiałami zawartymi w scenariuszach:
+.. attention::
 
-* :ref:`Podstawy Pythona <podstawy-python>`,
-* :ref:`Bazy danych w Pythonie <bazy-python>`,
-* :ref:`Quiz <quiz-app>`.
+    **Wymagane oprogramowanie**:
 
-.. contents::
-    :depth: 1
-    :local:
+      * Środowisko wirtualne Pythona v. 3.x
+      * Flask v. 3.1.x
+      * Opcjonalnie: interpreter bazy SQLite3
 
-Do pracy potrzebne nam będzie wirtualne środowisko Pythona z zainstalowanym pakietem Flask.
-Początek pracy jest taki sam, jak w przypadku aplikacji :ref:`Quiz <quiz-app>`, tzn.:
+    Zalecamy zapoznanie się z materiałami zawartymi w scenariuszach:
 
-1. przygotowujemy wirtualne środowisko Pythona w katalogu :file:`projekty_flask`, chyba że
-   zrobiliśmy to wcześniej podczas realizacji aplikacji Quiz;
-2. w katalogu :file:`projekty_flask` tworzymy **katalog aplikacji**: :file:`todo`;
-3. wykonujemy 2. i 3. punkt scenariusza Quiz, tj.: "Projekt i aplikacja" oraz "Strona główna".
+      * :ref:`Podstawy Pythona <podstawy-python>`,
+      * :ref:`Bazy danych w Pythonie <bazy-python>`,
+      * :ref:`Quiz <quiz-app>`.
 
-W pliku :file:`app.py` zmieniamy w konfiguracji aplikacji nazwę serwisu
-zapisaną w kluczu ``SITE_NAME`` na "Projekty Flask".
+Środowisko pracy
+================
+
+.. tip::
+
+    Do tworzenia aplikacji z użyciem Flask-a możesz użyć dowolnych narzędzi, np. terminala i ulubionego edytora kodu.
+    Sugerujemy jednak wykorzystanie środowiska typu `PyCharm <https://www.jetbrains.com/pycharm/>`_
+    lub `VSCodium <https://vscodium.com/>`_, ponieważ w dużym stopniu ułatwiają pracę nad projektami w języku Python.
+
+    Jeżeli wykonałeś scenariusz aplikacji "Quiz", pomiń przygotowanie środowiska pracy, wykorzystaj katalog
+    i wirtualne środowisko z poprzedniego scenariusza.
+
+Przed rozpoczęciem pracy przygotuj w katalogu :file:`projekty_flask` :ref:`wirtualne środowisko Pythona <venv>`
+i w aktywnym środowisku zainstaluj pakiet *Flask*:
+
+.. raw:: html
+
+    <div class="code_no">Terminal nr <script>var ter_no = ter_no || 1; document.write(ter_no++);</script></span></div>
+
+.. code-block:: bash
+
+    (.venv) ~/projekty_django$ pip install flask==3.1.3
+
+.. warning::
+
+    Za każdym razem przed rozpoczęciem pracy nad projektem upewnij się, że środowisko wirtualne zostało aktywowane.
 
 Model danych i baza
 ===================
 
-Jako źródło danych aplikacji wykorzystamy tym razem bazę SQLite3 obsługiwaną za pomocą
+Początek pracy jest taki sam, jak w przypadku aplikacji :ref:`Quiz <quiz-app>`, tzn.:
+
+1. w katalogu :file:`projekty_flask` tworzymy **katalog aplikacji**: :file:`todo`;
+2. wykonujemy 2. i 3. punkt scenariusza :ref:`Quiz <quiz-app>`, tj.: "Projekt i aplikacja" oraz "Strona główna".
+
+W pliku :file:`app.py` zmieniamy w konfiguracji aplikacji nazwę serwisu
+zapisaną w kluczu ``SITE_NAME`` na "Projekty Flask".
+
+Jako źródło danych aplikacji wykorzystamy bazę SQLite3 obsługiwaną za pomocą
 modułu Pythona `sqlite3 <https://docs.python.org/3/library/sqlite3.html>`_.
 
 **Model danych**, tj. w tym przypadku schemat bazy danych, zdefiniujemy w pliku :file:`modele.sql`,

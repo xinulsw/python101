@@ -17,11 +17,6 @@ krótkimi wiadomościami.
       * Django v. 5.1.x
       * Opcjonalnie: interpreter bazy SQLite3
 
-.. contents::
-    :depth: 1
-    :local:
-
-
 .. _czat1-env:
 
 Środowisko pracy
@@ -30,8 +25,8 @@ krótkimi wiadomościami.
 .. tip::
 
     Do tworzenia aplikacji z użyciem Django możesz użyć dowolnych narzędzi, np. terminala i ulubionego edytora kodu.
-    Sugerujemy jednak wykorzystanie środowiska **PyCharm**, ponieważ w dużym stopniu ułatwia
-    pracę nad projektami w języku Python.
+    Sugerujemy jednak wykorzystanie środowiska typu `PyCharm <https://www.jetbrains.com/pycharm/>`_
+    lub `VSCodium <https://vscodium.com/>`_, ponieważ w dużym stopniu ułatwiają pracę nad projektami w języku Python.
 
 Przed rozpoczęciem pracy przygotuj w katalogu :file:`projekty_django`` :ref:`wirtualne środowisko Pythona <venv>`
 i w aktywnym środowisku zainstaluj pakiet *Django*:

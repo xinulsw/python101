@@ -3,18 +3,20 @@
 Quiz
 #####
 
-Realizacja aplikacji internetowej Quiz w oparciu o :term:`framework` Flask 3.1.x
+Realizacja aplikacji internetowej "Quiz" w oparciu o :term:`framework` `Flask <https://flask.palletsprojects.com/en/stable/>`_
 Na stronie wyświetlamy pytania, użytkownik zaznacza poprawne odpowiedzi,
 przesyła je na serwer i otrzymuje informację o wynikach.
 
 Środowisko pracy
 ================
 
-Do tworzenia aplikacji z użyciem Flaska możesz użyć dowolnych narzędzi, np. terminala i ulubionego edytora kodu.
-Sugerujemy jednak wykorzystanie środowiska **PyCharm**, ponieważ w dużym stopniu ułatwia pracę nad projektami
-w języku Python.
+.. tip::
 
-Przed rozpoczęciem pracy przygotuj w katalogu :file:`projekty_flask`` :ref:`wirtualne środowisko Pythona <venv>`
+    Do tworzenia aplikacji z użyciem Flask-a możesz użyć dowolnych narzędzi, np. terminala i ulubionego edytora kodu.
+    Sugerujemy jednak wykorzystanie środowiska typu `PyCharm <https://www.jetbrains.com/pycharm/>`_
+    lub `VSCodium <https://vscodium.com/>`_, ponieważ w dużym stopniu ułatwiają pracę nad projektami w języku Python.
+
+Przed rozpoczęciem pracy przygotuj w katalogu :file:`projekty_flask` :ref:`wirtualne środowisko Pythona <venv>`
 i w aktywnym środowisku zainstaluj pakiet *Flask*:
 
 .. code-block:: bash
@@ -24,7 +26,7 @@ i w aktywnym środowisku zainstaluj pakiet *Flask*:
 Projekt i aplikacja
 ===================
 
-W katalogu :file:`projekty_flask`` tworzymy nowy **katalog aplikacji** o nazwie :file:`quiz`:
+W katalogu :file:`projekty_flask` tworzymy nowy **katalog aplikacji** o nazwie :file:`quiz`:
 
 .. raw:: html
 
