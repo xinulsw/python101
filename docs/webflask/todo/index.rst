@@ -43,7 +43,7 @@ i w aktywnym środowisku zainstaluj pakiet *Flask*:
 
 .. code-block:: bash
 
-    (.venv) ~/projekty_django$ pip install flask==3.1.3
+    (.venv) ~/projekty_flask$ pip install flask==3.1.3
 
 .. warning::
 

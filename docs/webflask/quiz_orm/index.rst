@@ -3,9 +3,9 @@
 Quiz ORM
 #####################
 
-Realizacja aplikacji internetowej **Quiz** w oparciu o :term:`framework` `Flask <https://flask.palletsprojects.com/en/stable/>`_ 3.1.x
-i `bazę danych SQLite <http://pl.wikipedia.org/wiki/SQLite>`_ zarządzaną przez system ORM `Peewee <https://docs.peewee-orm.com/en/latest/>`_
-lub `SQLAlchemy <https://www.sqlalchemy.org/>`_.
+Realizacja aplikacji internetowej "Quiz" w oparciu o :term:`framework` `Flask <https://flask.palletsprojects.com/en/stable/>`_ 3.1.x
+i `bazę danych SQLite <http://pl.wikipedia.org/wiki/SQLite>`_ zarządzaną przez system
+ORM `Peewee <https://docs.peewee-orm.com/en/latest/>`_ lub `SQLAlchemy <https://www.sqlalchemy.org/>`_.
 
 Zalecamy zapoznanie się z materiałami zawartymi w scenariuszach:
 
@@ -14,40 +14,40 @@ Zalecamy zapoznanie się z materiałami zawartymi w scenariuszach:
 * :ref:`Quiz <quiz-app>`,
 * :ref:`ToDo <todo-app>`.
 
-Wykorzystywane biblioteki instalujemy przy użyciu instalatora ``pip``:
+Środowisko pracy
+================
+
+.. tip::
+
+    Do tworzenia aplikacji z użyciem Flask-a możesz użyć dowolnych narzędzi, np. terminala i ulubionego edytora kodu.
+    Sugerujemy jednak wykorzystanie środowiska typu `PyCharm <https://www.jetbrains.com/pycharm/>`_
+    lub `VSCodium <https://vscodium.com/>`_, ponieważ w dużym stopniu ułatwiają pracę nad projektami w języku Python.
+
+    Jeżeli wykonałeś scenariusz aplikacji "Quiz", pomiń przygotowanie środowiska pracy, wykorzystaj katalog
+    i wirtualne środowisko z poprzedniego scenariusza.
+
+Przed rozpoczęciem pracy przygotuj w katalogu :file:`projekty_flask` :ref:`wirtualne środowisko Pythona <venv>`
+i w aktywnym środowisku zainstaluj pakiety *Flask* oraz *Flask-wtf*:
+
+.. raw:: html
+
+    <div class="code_no">Terminal nr <script>var ter_no = ter_no || 1; document.write(ter_no++);</script></span></div>
 
 .. code-block:: bash
 
-    ~$ sudo pip install peewee flask-wtf
+    (.venv) ~/projekty_flask$ pip install flask==3.1.3 peewee flask-wtf
+
+.. warning::
+
+    Za każdym razem przed rozpoczęciem pracy nad projektem upewnij się, że środowisko wirtualne zostało aktywowane.
 
 .. note::
 
     W budowanym poniżej kodzie wykorzystamy ORM Peewee, na końcu omówimy
     różnice w przypadku użycia SQLAlchemy.
 
-.. contents::
-    :depth: 1
-    :local:
-
-Do pracy potrzebne nam będzie wirtualne środowisko Pythona z zainstalowanymi frameworkami
-Flask, Peewee, SQLAlchemy, Flask-WTF.
-Początek pracy jest taki sam, jak w przypadku aplikacji :ref:`Quiz <quiz-app>`, tzn.:
-
-1. przygotowujemy wirtualne środowisko Pythona w katalogu :file:`projekty_flask`, chyba że
-   zrobiliśmy to wcześniej podczas realizacji aplikacji Quiz lub ToDo;
-2. instalujemy wymagane pakiety:
-
-.. code-block:: bash
-
-    (.venv) ~/projekty_flask$ pip install flask peewee sqlalchemy flask-wtf
-
 Modularyzacja
 =============
-
-Scenariusze :ref:`Quiz <quiz-app>` i :ref:`ToDo <todo-app>` pokazują możliwość
-umieszczenia całego kodu aplikacji obsługiwanej przez Flaska w jednym pliku.
-Dla celów szkoleniowych to dobre rozwiązanie, ale w bardziej rozbudowanych projektach
-wygodniej umieścić poszczególne części aplikacji w osobnych plikach.
 
 Kod rozmieścimy więc następująco:
 
