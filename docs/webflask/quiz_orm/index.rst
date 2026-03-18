@@ -23,7 +23,7 @@ Zalecamy zapoznanie się z materiałami zawartymi w scenariuszach:
     Sugerujemy jednak wykorzystanie środowiska typu `PyCharm <https://www.jetbrains.com/pycharm/>`_
     lub `VSCodium <https://vscodium.com/>`_, ponieważ w dużym stopniu ułatwiają pracę nad projektami w języku Python.
 
-    Jeżeli wykonałeś scenariusz aplikacji "Quiz", pomiń przygotowanie środowiska pracy, wykorzystaj katalog
+    Jeżeli wykonałeś scenariusz aplikacji "Quiz" lub "ToDo", pomiń przygotowanie środowiska pracy, wykorzystaj katalog
     i wirtualne środowisko z poprzedniego scenariusza.
 
 Przed rozpoczęciem pracy przygotuj w katalogu :file:`projekty_flask` :ref:`wirtualne środowisko Pythona <venv>`
@@ -46,46 +46,20 @@ i w aktywnym środowisku zainstaluj pakiety *Flask* oraz *Flask-wtf*:
     W budowanym poniżej kodzie wykorzystamy ORM Peewee, na końcu omówimy
     różnice w przypadku użycia SQLAlchemy.
 
-Modularyzacja
-=============
-
-Kod rozmieścimy więc następująco:
-
-* ``app.py`` – konfiguracja aplikacji Flaska i połączeń z bazą,
-* ``models.py`` – klasy opisujące tabele, pola i relacje w bazie,
-* ``views.py`` – widoki, czyli funkcje, powiązane z adresami URL, obsługujące żądania użytkownika,
-* ``forms.py`` – definicje formularza wykorzystywanego w aplikacji,
-* ``main.py`` – główny plik naszej aplikacji wiążący wszystkie powyższe, odpowiada za utworzenie początkowej bazy,
-* ``dane.py`` – moduł opcjonalny, odczytanie przykładowych danych z pliku :file:`pytania.csv`
-  i dodanie ich do bazy.
-
-Wszystkie pliki muszą znajdować się w katalogu aplikacji ``quiz-orm``,
-który zawierać będzie również podkatalogi:
-
-* ``templates`` – tu umieścimy szablony html,
-* ``static`` – to miejsce dla arkuszy stylów, obrazki i/lub skryptów *js*.
-
-Ściągamy przygotowane przez nas archiwum :download:`quiz-orm_skel.zip <quiz-orm-skel.zip>`
-i rozpakowujemy w wybranym katalogu. Początkowy kod pozwoli uruchomić aplikację
-i wyświetlić zawartość strony głównej. Aplikację uruchamiamy wydając
-w katalogu :file:`quiz-orm` polecenie:
-
-.. raw:: html
-
-    <div class="code_no">Terminal. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
-
-.. code-block:: bash
-
-    ~/quiz-orm$ python3 main.py
-
-.. figure:: img/quiz-orm_skel.png
-
-
 Szablon podstawowy
 ==================
 
-W omówionych do tej pory, wspomnianych wyżej, scenariuszach aplikacji internetowych
-każdy szablon zawierał kompletny kod strony. W praktyce jednak duża część kodu HTML
+W katalogu :file:`projekty_flask` utwórz **katalog aplikacji** o nazwie :file:`quiz-orm`.
+
+Wykonaj 2. i 3. punkt scenariusza :ref:`Quiz <quiz-app>`, tj.: "Projekt i aplikacja" oraz "Strona główna".
+
+W poprzednich scenariuszach aplikacji internetowych używaliśmy znaczników HTML i prostych reguł CSS.
+Teraz skorzystamy z frameworku CSS `Bulma <https://bulma.io/>`_, aby przygotować szablon bazowy.
+W podkatalogu :file:`templates` yworzymy plik :file:`szkielet.html` z następującą zawartością:
+
+
+
+bez dodatkowych . W praktyce jednak duża część kodu HTML
 powtarza się na każdej stronie w ramach danego serwisu. Tę wspólną część kodu
 umieścimy w szablonie podstawowym :file:`templates/szkielet.html`:
 
@@ -141,6 +115,38 @@ następująco:
 Po odświeżeniu strony powinniśmy zobaczyć w przeglądarce nowy wygląd strony:
 
 .. figure:: img/quiz-orm_glowna.png
+
+Kod rozmieścimy więc następująco:
+
+* ``app.py`` – konfiguracja aplikacji Flaska i połączeń z bazą,
+* ``models.py`` – klasy opisujące tabele, pola i relacje w bazie,
+* ``views.py`` – widoki, czyli funkcje, powiązane z adresami URL, obsługujące żądania użytkownika,
+* ``forms.py`` – definicje formularza wykorzystywanego w aplikacji,
+* ``main.py`` – główny plik naszej aplikacji wiążący wszystkie powyższe, odpowiada za utworzenie początkowej bazy,
+* ``dane.py`` – moduł opcjonalny, odczytanie przykładowych danych z pliku :file:`pytania.csv`
+  i dodanie ich do bazy.
+
+Wszystkie pliki muszą znajdować się w katalogu aplikacji ``quiz-orm``,
+który zawierać będzie również podkatalogi:
+
+* ``templates`` – tu umieścimy szablony html,
+* ``static`` – to miejsce dla arkuszy stylów, obrazki i/lub skryptów *js*.
+
+Ściągamy przygotowane przez nas archiwum :download:`quiz-orm_skel.zip <quiz-orm-skel.zip>`
+i rozpakowujemy w wybranym katalogu. Początkowy kod pozwoli uruchomić aplikację
+i wyświetlić zawartość strony głównej. Aplikację uruchamiamy wydając
+w katalogu :file:`quiz-orm` polecenie:
+
+.. raw:: html
+
+    <div class="code_no">Terminal. <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
+.. code-block:: bash
+
+    ~/quiz-orm$ python3 main.py
+
+.. figure:: img/quiz-orm_skel.png
+
 
 Baza danych
 ============
