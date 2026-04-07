@@ -21,24 +21,17 @@ i w aktywnym środowisku zainstaluj pakiet *Flask*:
 
 .. code-block:: bash
 
-    (.venv) ~/projekty_flask$ pip install flask
+    (.venv) ~/projekty_flask$ pip install flask==3.1.3
+
+.. warning::
+
+    Za każdym razem przed rozpoczęciem pracy nad projektem upewnij się, że środowisko wirtualne zostało aktywowane.
 
 Projekt i aplikacja
 ===================
 
-W katalogu :file:`projekty_flask` tworzymy nowy **katalog aplikacji** o nazwie :file:`quiz`:
+W katalogu :file:`projekty_flask` utwórz **katalog aplikacji** o nazwie :file:`quiz`.
 
-.. raw:: html
-
-    <div class="code_no">Terminal nr <script>var ter_t = ter_t || 1; document.write(ter_t++);</script></div>
-
-.. highlight:: bash
-.. code-block:: bash
-
-    (.venv) ~/projekty_flask$ mkdir quiz
-    (.venv) ~/projekty_flask$ cd quiz
-
-Utworzymy szkielet aplikacji Flask, co pozwoli na uruchomienie testowego serwera www.
 W katalogu aplikacji :file:`quiz` dodajemy plik o nazwie :file:`app.py` i umieszczamy w nim poniższy kod.
 
 .. raw:: html
@@ -49,8 +42,7 @@ W katalogu aplikacji :file:`quiz` dodajemy plik o nazwie :file:`app.py` i umiesz
 .. literalinclude:: source/app1.py
     :linenos:
 
-Serwer uruchamiamy jednym z poleceń w terminalu w katalogu projektu:
-``flask run --debug`` lub ``python3 app.py`` (``py app.py`` w systemie Windows):
+Testowy serwer WWW uruchamiamy jednym z poleceń w terminalu w katalogu projektu:
 
 .. raw:: html
 
@@ -59,6 +51,10 @@ Serwer uruchamiamy jednym z poleceń w terminalu w katalogu projektu:
 .. code-block:: bash
 
     (.venv) ~/projekty_flask/quiz$ flask run --debug
+    lub:
+    (.venv) ~/projekty_flask/quiz$ python3 app.py
+    w MS Windows:
+    (.venv) py app.py
 
 .. figure:: img/flask_run_01.png
 
@@ -79,19 +75,16 @@ Nasza aplikacja zwraca użytkownikowi stronę główną za pomocą widoku ``inde
 Jest to funkcja Pythona powiązana z określonym w dekoratorze ``route('/')``
 adresem ``/`` oznaczającym domyślny zasób serwera.
 
-Widoki obsługują podstawowe żądania protokołu :term:`HTTP` wysyłane przez przeglądarkę.
+**Widoki** obsługują podstawowe żądania protokołu :term:`HTTP` wysyłane przez przeglądarkę.
+Dwa najczęstsze typy żądań to:
 
-.. note::
-
-    Żądania typu :term:`GET` występują wtedy, kiedy chcemy pobrać jakieś dane z serwera,
-    np. stronę. Ewentualne dane przekazywane do serwera (np. parametry wyszukiwania)
-    widoczne są w adresie URL, np.:
-
-    ``www.google.com/search?client=firefox-b-lm&channel=entpr&q=żądania+GET+i+POST``
-
-    Żądanie typu :term:`POST` służą natomiast do przesyłania na serwer danych niewidocznych w adresie URL,
-    które mają zazwyczaj zmieniać stan aplikacji, np. dodać lub zalogować użytkownika.
-    Do przesyłania danych metodą ``POST`` służą formularze.
+- żądania typu :term:`GET` – występują wtedy, kiedy chcemy pobrać jakieś dane z serwera,
+  np. stronę. Ewentualne dane przekazywane do serwera (np. parametry wyszukiwania)
+  widoczne są w adresie URL, np.:
+  ``www.google.com/search?client=firefox-b-lm&channel=entpr&q=żądania+GET+i+POST``
+- żądania typu :term:`POST` – służą do przesyłania na serwer danych niewidocznych w adresie URL,
+  które zazwyczaj zmieniają stan aplikacji, np. dodają lub logują użytkownika.
+  Do przesyłania danych metodą ``POST`` służą najczęściej formularze.
 
 W odpowiedzi na żądanie aplikacja może odsyłać różne dane, np. predefiniowany tekst, ale najczęściej
 będzie to strona :term:`HTML` zawierająca różne w zależności od żądania informacje, np.

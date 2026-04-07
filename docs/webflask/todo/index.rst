@@ -52,12 +52,11 @@ i w aktywnym środowisku zainstaluj pakiet *Flask*:
 Model danych i baza
 ===================
 
-Początek pracy jest taki sam, jak w przypadku aplikacji :ref:`Quiz <quiz-app>`, tzn.:
+W katalogu :file:`projekty_flask` utwórz **katalog aplikacji** o nazwie :file:`todo`.
 
-1. w katalogu :file:`projekty_flask` tworzymy **katalog aplikacji**: :file:`todo`;
-2. wykonujemy 2. i 3. punkt scenariusza :ref:`Quiz <quiz-app>`, tj.: "Projekt i aplikacja" oraz "Strona główna".
+Wykonaj 2. i 3. punkt scenariusza :ref:`Quiz <quiz-app>`, tj.: "Projekt i aplikacja" oraz "Strona główna".
 
-W pliku :file:`app.py` zmieniamy w konfiguracji aplikacji nazwę serwisu
+W pliku :file:`app.py` zmień w konfiguracji aplikacji nazwę serwisu
 zapisaną w kluczu ``SITE_NAME`` na "Projekty Flask".
 
 Jako źródło danych aplikacji wykorzystamy bazę SQLite3 obsługiwaną za pomocą
@@ -81,8 +80,7 @@ Tabele:
 - ``zadanie`` – zawierać będzie identyfikator zadania, identyfikator użytkownika, treść zadania,
   oznaczenie wykonania oraz datę dodania.
 
-Funkcje potrzebne do obsługi bazy danych umieścimy w nowym pliku :file:`db.py`, który zapisujemy
-w katalogu aplikacji.
+Funkcje potrzebne do obsługi bazy danych umieścimy w katalogu aplikacji w nowym pliku :file:`db.py`:
 
 .. raw:: html
 
@@ -136,6 +134,15 @@ klucz ``DATABASE`` wskazujący na plik bazy danych :file:`db.sqlite`.
 Następnie umieszczamy wywołanie funkcji ``init_app(app)``, dzięki czemu jeżeli
 na dysku nie będzie pliku bazy danych, zostanie on utworzony, a wraz z nim
 tabele zdefiniowane w pliku :file:`todo.sql`.
+
+.. tip::
+
+    Serwer uruchamiamy jednym z poleceń w terminalu w katalogu projektu:
+    ``flask run --debug`` lub ``python3 app.py`` (``py app.py`` w systemie Windows):
+
+    .. code-block:: bash
+
+        (.venv) ~/projekty_flask/quiz$ flask run --debug
 
 Po uruchomieniu serwera deweloperskiego i otwarciu adresu ``http://127.0.0.1:5000``
 powinniśmy zobaczyć stronę:
