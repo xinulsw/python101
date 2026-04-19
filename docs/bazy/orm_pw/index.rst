@@ -3,6 +3,10 @@
 System ORM Peewee
 #################
 
+.. contents::
+    :depth: 1
+    :local:
+
 Używanie systemów ORM, takich jak :term:`Peewee`, w prostych projektach
 sprowadza się do schematu, który poglądowo można opisać w trzech krokach:
 
@@ -23,7 +27,7 @@ Poniżej spróbujemy pokazać, jak wykonywać typowe operacje na bazie z wykorzy
     Do używania systemów ORM wystarczające jest poznanie ich interfejsu API.
 
 Środowisko pracy
-================
+*****************
 
 .. note::
 
@@ -39,7 +43,7 @@ i w aktywnym środowisku zainstaluj pakiet *Peewee*:
     (.venv) ~/baza_orm$ pip install peewee
 
 Klasa bazowa
-************
+*************
 
 W ulubionym edytorze utwórz plik o nazwie :file:`orm_pw.py` z następującym kodem:
 
@@ -117,7 +121,7 @@ plik bazy :file:`baza_pw.db`.
     jako pola o nazwie ``id`` zawierające liczby całkowite.
 
 Dodawanie danych
-****************
+*****************
 
 Dodawanie (ang. *create*) danych w Peewee wykonywane jest za pomocą obiektów
 reprezentujących rekordy zdefiniowanych tabel oraz ich metod.
@@ -145,7 +149,7 @@ Następnie za pomocą metody ``insert_many()``, której jako argument podajemy p
 dodajemy rekordy z danymi wielu uczniów do bazy.
 
 Odczyt danych
-*************
+**************
 
 Odczyt danych może być realizowany na wiele sposobów. Zacznijmy od uzupełnienia kodu skryptu:
 
@@ -176,7 +180,7 @@ Używamy metody ``join()``, która odpowiada klauzuli ``INNER JOIN`` języka SQL
 Jeżeli w bazie nie ma żadnych uczniów, wypisujemy odpowiedni komunikat.
 
 Modyfikowanie danych
-********************
+*********************
 
 Systemy ORM ułatwiają modyfikowanie danych w bazie, ponieważ operacja ta polega
 na zmianie wartości pól wybranego obiektu. W naszym skrypcie dopisujemy kod:
@@ -195,7 +199,7 @@ Następnie atrybutowi ``klasa`` obiektu reprezentującego ucznia przypisujemy ob
 ``uczen.klasa = nowa_klasa``. Na koniec zapisujemy zmiany w bazie za pomocą metody ``save()``.
 
 Usuwanie danych
-****************
+******************
 
 Do skryptu dodajemy poniższy kod:
 

@@ -22,7 +22,7 @@ jak wykorzystywać język SQL w skryptach wykonywanych w wierszu poleceń.
     i pracę nad projektami w języku Python.
 
 Połączenie z bazą
-*****************
+******************
 
 W ulubionym edytorze tworzymy plik :file:`sql_raw.py` i umieszczamy w nim poniższy kod:
 

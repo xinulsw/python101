@@ -3,6 +3,10 @@
 Dane z pliku
 ##################
 
+.. contents::
+    :depth: 1
+    :local:
+
 Dane z tabel w bazach MS Accessa lub LibreOffice Base'a możemy eksportować
 do formatu `CSV (comma-separated values) <https://pl.wikipedia.org/wiki/CSV_(format_pliku)>`_,
 czyli pliku tekstowego, w którym każda linia reprezentuje pojedynczy rekord,
