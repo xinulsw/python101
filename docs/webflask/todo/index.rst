@@ -415,15 +415,19 @@ Pozostaje dodanie szablonów zwracanych przez omówione widoki. W katalogu
 
 - dodajemy plik :file:`user_dodaj.html`:
 
-    .. raw:: html
+.. raw:: html
 
-        <div class="code_no">Plik <i>user_dodaj.html</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+    <div class="code_no">Plik <i>user_dodaj.html</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: html
 .. literalinclude:: source/user_dodaj.html
     :linenos:
 
 – oraz plik :file:`user_usun.html`:
+
+.. raw:: html
+
+    <div class="code_no">Plik <i>user_usun.html</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
 .. highlight:: html
 .. literalinclude:: source/user_usun.html
