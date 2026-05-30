@@ -382,6 +382,10 @@ Dodawanie i usuwanie kont
 W blueprincie :file:`users.py` umieścimy jeszcze dwa widoki, które umożliwią zarejestrowanie się
 użytkownika oraz usuwanie konta:
 
+.. raw:: html
+
+    <div class="code_no">Plik <i>users.py</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
+
 .. highlight:: python
 .. literalinclude:: source/users.py
     :linenos:
@@ -415,15 +419,15 @@ Pozostaje dodanie szablonów zwracanych przez omówione widoki. W katalogu
 
         <div class="code_no">Plik <i>user_dodaj.html</i> <span class="right">Kod nr <script>var code_no = code_no || 1; document.write(code_no++);</script></span></div>
 
-    .. highlight:: html
-    .. literalinclude:: source/user_dodaj.html
-        :linenos:
+.. highlight:: html
+.. literalinclude:: source/user_dodaj.html
+    :linenos:
 
 – oraz plik :file:`user_usun.html`:
 
-    .. highlight:: html
-    .. literalinclude:: source/user_usun.html
-        :linenos:
+.. highlight:: html
+.. literalinclude:: source/user_usun.html
+    :linenos:
 
 Ćwiczenie
 ------------
